@@ -51,6 +51,16 @@ const LOGOS_MANUAL = {
     "https://photos.smugmug.com/Music/Band-Logos/i-WChJBx8/0/KvpTfhC7qvpSFPT5Jr6TqmRRbRP2vZT2BmLhkKP9B/X2/Burning%20Time-X2.jpg",
   Cabal:
     "https://photos.smugmug.com/Music/Band-Logos/i-SLwBmDm/0/LWv4LCZQnKVJncSWH4BV86w3d6p9N5jbkdfxgJVdV/L/Cabal-L.jpg",
+  "Calibrating the Calamity":
+    "https://photos.smugmug.com/Music/Band-Logos/i-WpKSz88/0/KXFfPc7C9LrC8zH2t4nTXjbgHWzZ822dC3C8V7xwV/X2/Calibrating%20the%20Calamity-X2.jpg",
+  "Capture the Sun":
+    "https://photos.smugmug.com/Music/Band-Logos/i-rc3TQWw/0/MPJx4P8XJctjVbFW2fP96vKrKbxMmbhtfLbHnHHZj/L/Capture%20the%20Sun-L.jpg",
+  Cavemanifesto:
+    "https://photos.smugmug.com/Music/Band-Logos/i-bw9Mrv4/0/NGxqzcXwhS8V4Rm6FM2fHRVvdDZTJvQrm7tkVD98j/X2/Cavemanifesto-X2.jpg",
+  "Civil Disturbance":
+    "https://photos.smugmug.com/Music/Band-Logos/i-86SdM8F/0/KbpHMWnmwg2Z9VsN6NdnCxqWKfZHJphX6DtVbVfdM/M/Civil%20Disturbance-M.jpg",
+  "Culling the Herd":
+    "https://photos.smugmug.com/Music/Band-Logos/i-FzLL5rj/0/KF43JppWJDGz32bHf8VwGNHHkS3dLcX5jkP887wKB/M/Culling%20the%20Herd-M.jpg",
 };
 
 const REGION_IMAGES = {
