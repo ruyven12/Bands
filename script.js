@@ -7,7 +7,19 @@ const SMUG = {
 // add logo URLs here when you have them
 const LOGOS_MANUAL = {
   // "13 High": "https://vmpix.smugmug.com/Music/Band-Logos/i-XcmVMQF/0/M/i-XcmVMQF-M.jpg",
-  // "3FD": "https://photos.smugmug.com/photos/i-XcmVMQF/0/MkbVx2J7MZf5tQ3hrK2NJD7VMPNhWsvLhxWZghLKG/M/i-XcmVMQF-M.jpg",
+  "3FD": "https://photos.smugmug.com/photos/i-XcmVMQF/0/MkbVx2J7MZf5tQ3hrK2NJD7VMPNhWsvLhxWZghLKG/M/i-XcmVMQF-M.jpg",
+  "Acoustified": "https://photos.smugmug.com/photos/i-PQJkT2p/0/MZMn3LDBn4Sjgz8zrBChKJ7KsxfB8fhHnRNvJWBwG/M/i-PQJkT2p-M.jpg",
+  "Afterblack": "https://photos.smugmug.com/photos/i-5PtmNNj/0/KW6WhmQmsnsTJH8Lbsjfvkwq4wfVnrPcSSSXbmHSc/M/i-5PtmNNj-M.jpg",
+  "Alions": "https://photos.smugmug.com/photos/i-fHWLWgV/0/L55C44pDMtzTkkdgsqntGkNz6WdXPcfntxSNpLpFP/S/i-fHWLWgV-S.jpg",
+  "Alter the Tides": "https://photos.smugmug.com/photos/i-zDvGGj2/0/Kdw7D9CBqP86dX8TPTw6JzfMsTTptPCgvSn6zwFvp/S/i-zDvGGj2-S.png",
+  "Amanita": "https://photos.smugmug.com/photos/i-3dL8kfD/0/LPDQgzSHrGKZdQCJ5ShrWcgTrwkfZCqk8vWz2Pgmq/M/i-3dL8kfD-M.jpg",
+};
+
+const REGION_IMAGES = {
+  Local: "https://photos.smugmug.com/photos/i-SCzbkmj/1/KjHvTQVKnSz36KmxFS5c2MrtLhgm9Wc8mTghFb5R8/M/i-SCzbkmj-M.png",
+  Regional: "https://photos.smugmug.com/photos/i-x5ncQx7/0/KcWqCsJ2cD94cz6fn2hwGxJjdMrbV6kSCXQ3ssGGw/S/i-x5ncQx7-S.jpg",
+  National: "https://photos.smugmug.com/photos/i-3Kk8S5k/0/MznDGX8kBgM99xp6RKNKf4L4VHtnKrx3ghQLF85h7/S/i-3Kk8S5k-S.jpg",
+  International: "https://photos.smugmug.com/photos/i-jqJ9RJd/0/LhpXpWQjX2Gbbh9nn4DsjxvwMWZBDWSMpSFRfPxJq/S/i-jqJ9RJd-S.jpg"
 };
 
 // region → letter → bands
@@ -16,7 +28,52 @@ const BANDS = {
     "O-C": [
       { name: "13 High" },
       { name: "3FD" },
-	  { name: "G-Gig" }	
+	    { name: "G-Gig" },
+      { name: "Acoustified" },
+      { name: "Afterblack" },
+      { name: "Alions" },
+      { name: "Alter the Tides" },
+      { name: "Amanita" },
+      { name: "Among Shadows" },
+      { name: "Anatomy of a Thief" },
+      { name: "Angel Slayer" },
+      { name: "Arta'Sin" },
+      { name: "Ascent to Power" },
+      { name: "Ashe Madness" },
+      { name: "Ashen Grey" },
+      { name: "Audio Apocalypse" },
+      { name: "Badtude" },
+      { name: "The Band Apollo" },  
+      { name: "Battery Steele" },
+      { name: "Beautiful Pain" },
+      { name: "Before the Betrayal" },
+      { name: "Beyond the Fall" },
+      { name: "Big Meat Hammer" },
+      { name: "Black Box" },
+      { name: "Black Orange" },
+      { name: "Black Vinegar" },
+      { name: "Blind Alibi" },
+      { name: "Bloodborn" },
+      { name: "Brand New Day" },
+      { name: "Break The Skin" },
+      { name: "BreakThrough" },
+      { name: "Broken Empire" },
+      { name: "The Burial Curse" },
+      { name: "Burning Time" },
+      { name: "Cabal" },
+      { name: "Calibrating the Calamity" },
+      { name: "Capture the Sun" },
+      { name: "Cavemanifesto" },
+      { name: "Cheers to Verona" },
+      { name: "Civil Disturbance" },
+      { name: "Clapping in Irons" },
+      { name: "Conscious Cadaver" },
+      { name: "Corn Borer" },
+      { name: "Cover One Eye" },
+      { name: "Cradle II Grave" },
+      { name: "Creatures" },
+      { name: "Cryptid Slaughter" },
+      { name: "Culling the Herd" }
     ],
     "D-G": [],
     "H-K": [],
@@ -132,7 +189,7 @@ function showLetterBands(region, letter, bandsArr) {
     link.href = bandUrl;
     link.target = "_blank";
     link.rel = "noopener";
-    link.textContent = "Open band page ↗";
+    link.textContent = bandDisplay;
 
     card.append(thumb, title, link);
     resultsEl.appendChild(card);
@@ -146,10 +203,23 @@ function buildTree() {
     const regionDet = document.createElement("details");
     regionDet.className = "region";
 
+    // summary with image for regions
     const regionSum = document.createElement("summary");
-    regionSum.textContent = region;
+    const imgSrc = REGION_IMAGES[region];
+    if (imgSrc) {
+      const img = document.createElement("img");
+      img.src = imgSrc;
+      img.alt = region;
+      img.style.height = "200px";         // adjust size as you like
+      img.style.objectFit = "contain";
+      img.style.display = "block";
+      regionSum.appendChild(img);
+    } else {
+      regionSum.textContent = region;    // fallback for any future regions
+    }
     regionDet.appendChild(regionSum);
 
+    // letters
     Object.entries(letters).forEach(([letter, bands]) => {
       const letterDet = document.createElement("details");
       letterDet.className = "letter";
@@ -157,14 +227,14 @@ function buildTree() {
       const letterSum = document.createElement("summary");
       letterSum.textContent = letter;
 
-      // 👉 If this is O-C, show all bands on click and DON'T render per-band buttons
+      // clicking a letter (e.g. O-C) shows ALL bands on the right
       letterSum.addEventListener("click", () => {
         setTimeout(() => showLetterBands(region, letter, bands), 0);
       });
 
       letterDet.appendChild(letterSum);
 
-      // For NON O-C letters, still show individual band buttons
+      // keep your rule: only non–O-C letters list individual band buttons
       if (letter !== "O-C") {
         const ul = document.createElement("ul");
         if (!bands.length) {
@@ -191,16 +261,6 @@ function buildTree() {
   });
 
   statusEl.textContent = "Static mode (GitHub hosted). Edit in script.js.";
-}
-
-function bindFilter() {
-  if (!filterInput) return;
-  filterInput.addEventListener("input", () => {
-    const q = filterInput.value.toLowerCase();
-    treeEl.querySelectorAll("li").forEach((li) => {
-      li.style.display = li.textContent.toLowerCase().includes(q) ? "" : "none";
-    });
-  });
 }
 
 buildTree();
