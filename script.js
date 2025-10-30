@@ -7,7 +7,7 @@ const SMUG = {
 // add logo URLs here when you have them
 const LOGOS_MANUAL = {
   // "13 High": "https://vmpix.smugmug.com/Music/Band-Logos/i-XcmVMQF/0/M/i-XcmVMQF-M.jpg",
-  "3FD": "https://photos.smugmug.com/photos/i-XcmVMQF/0/MkbVx2J7MZf5tQ3hrK2NJD7VMPNhWsvLhxWZghLKG/M/i-XcmVMQF-M.jpg",
+  // "3FD": "https://photos.smugmug.com/photos/i-XcmVMQF/0/MkbVx2J7MZf5tQ3hrK2NJD7VMPNhWsvLhxWZghLKG/M/i-XcmVMQF-M.jpg",
 };
 
 // region → letter → bands
@@ -15,7 +15,7 @@ const BANDS = {
   Local: {
     "O-C": [
       { name: "13 High" },
-      { name: "3FD" }
+      { name: "3FD" },
 	  { name: "G-Gig" }	
     ],
     "D-G": [],
