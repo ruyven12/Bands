@@ -1,25 +1,67 @@
 // ------- CONFIG -------
 const SMUG = {
   NICKNAME: "vmpix",
-  BASE_FOLDER: "Music/Archives/Bands"
+  BASE_FOLDER: "Music/Archives/Bands",
 };
 
 // add logo URLs here when you have them
 const LOGOS_MANUAL = {
   // "13 High": "https://vmpix.smugmug.com/Music/Band-Logos/i-XcmVMQF/0/M/i-XcmVMQF-M.jpg",
-  "3FD": "https://photos.smugmug.com/photos/i-XcmVMQF/0/MkbVx2J7MZf5tQ3hrK2NJD7VMPNhWsvLhxWZghLKG/M/i-XcmVMQF-M.jpg",
-  "Acoustified": "https://photos.smugmug.com/photos/i-PQJkT2p/0/MZMn3LDBn4Sjgz8zrBChKJ7KsxfB8fhHnRNvJWBwG/M/i-PQJkT2p-M.jpg",
-  "Afterblack": "https://photos.smugmug.com/photos/i-5PtmNNj/0/KW6WhmQmsnsTJH8Lbsjfvkwq4wfVnrPcSSSXbmHSc/M/i-5PtmNNj-M.jpg",
-  "Alions": "https://photos.smugmug.com/photos/i-fHWLWgV/0/L55C44pDMtzTkkdgsqntGkNz6WdXPcfntxSNpLpFP/S/i-fHWLWgV-S.jpg",
-  "Alter the Tides": "https://photos.smugmug.com/photos/i-zDvGGj2/0/Kdw7D9CBqP86dX8TPTw6JzfMsTTptPCgvSn6zwFvp/S/i-zDvGGj2-S.png",
-  "Amanita": "https://photos.smugmug.com/photos/i-3dL8kfD/0/LPDQgzSHrGKZdQCJ5ShrWcgTrwkfZCqk8vWz2Pgmq/M/i-3dL8kfD-M.jpg",
+  "3FD":
+    "https://photos.smugmug.com/photos/i-XcmVMQF/0/MkbVx2J7MZf5tQ3hrK2NJD7VMPNhWsvLhxWZghLKG/M/i-XcmVMQF-M.jpg",
+  "Absence of the Sun":
+    "https://photos.smugmug.com/Music/Band-Logos/i-j39NTr3/0/MV7cxTwRtrTBbjTsJ4XvfWsWL3kwqVNRLCjsjdrvL/S/Absence%20of%20the%20Sun-S.jpg",
+  Acoustified:
+    "https://photos.smugmug.com/Music/Band-Logos/i-PQJkT2p/0/K4wJX3zVsRWMpgFkMPqBcHntt3ctDwzm66QqX5Rbc/L/Acoustified-L.jpg",
+  Afterblack:
+    "https://photos.smugmug.com/Music/Band-Logos/i-5PtmNNj/0/LcQjGLX7tXDgNLDWvSBVNLPDRxwphpkVgkvncNQhK/X2/Afterblack-X2.jpg",
+  Alions:
+    "https://photos.smugmug.com/photos/i-fHWLWgV/0/L55C44pDMtzTkkdgsqntGkNz6WdXPcfntxSNpLpFP/S/i-fHWLWgV-S.jpg",
+  "Alter the Tides":
+    "https://photos.smugmug.com/photos/i-zDvGGj2/0/Kdw7D9CBqP86dX8TPTw6JzfMsTTptPCgvSn6zwFvp/S/i-zDvGGj2-S.png",
+  Amanita:
+    "https://photos.smugmug.com/photos/i-3dL8kfD/0/LPDQgzSHrGKZdQCJ5ShrWcgTrwkfZCqk8vWz2Pgmq/M/i-3dL8kfD-M.jpg",
+  "Among Shadows":
+    "https://photos.smugmug.com/photos/i-fWBP2sT/0/LF28tqDzLhNZgZ4T8djJr5QfLMHnTCfNgZ4xQkF7d/M/i-fWBP2sT-M.png",
+  "Anatomy of a Thief":
+    "https://photos.smugmug.com/photos/i-4kdTtbF/0/NhVsB8B2Q7vFLz2StNrdRBsv6KtDB8RRVsBpp7QtW/M/i-4kdTtbF-M.jpg",
+  "Arta'Sin":
+    "https://photos.smugmug.com/photos/i-9xxWH27/0/NNnQJg6LjjmvQ22nM5scBZTMX69Bd5xMvh3MLPrmx/M/i-9xxWH27-M.jpg",
+  "Ascent to Power":
+    "https://photos.smugmug.com/photos/i-hBxRmNx/0/NX8nPCFMf8LkzGxCds9pMFtJ29w8BjXwRnhpd4J8P/M/i-hBxRmNx-M.jpg",
+  "Ashen Grey":
+    "https://photos.smugmug.com/photos/i-mKTmsVz/0/LM98RHH956dBvGzQB4R3rkn8NfsSCRmStPbmBrh2m/M/i-mKTmsVz-M.jpg",
+  "The Band Apollo":
+    "https://photos.smugmug.com/Music/Band-Logos/i-LpTjbhd/0/L4mGjhgWzHLbrvFZtZqV7GPCxckxgFbfmT5KqfNFQ/X2/Band%20Apollo%2C%20The-X2.jpg",
+  "Before the Betrayal":
+    "https://photos.smugmug.com/Music/Band-Logos/i-dz9CmWC/0/M4b9tFqwPxC9gZw57xqbFbWp5SDhfCSvf6dxrqq3w/S/Before%20the%20Betrayal-S.jpg",
+  "Black Box":
+    "https://photos.smugmug.com/Music/Band-Logos/i-H2S4sbn/1/MTTk7wQCxW8dSX7J5Cq23rBCF96dJr2RQCwjxLSKT/X2/Black%20Box-X2.png",
+  "Black Orange":
+    "https://photos.smugmug.com/Music/Band-Logos/i-cNnJ8wz/0/NXFmZQh9jL7rpTbKwVMNbNKfd3NRq7K8qDmpNrfQq/X2/Black%20Orange-X2.jpg",
+  "Black Vinegar":
+    "https://photos.smugmug.com/Music/Band-Logos/i-jDghVqX/0/LRXQVGCrV9N5gdFtN7dDJZP2kVnmGwzP9GTSc3khf/L/Black%20Vinegar-L.jpg",
+  "Blind Alibi":
+    "https://photos.smugmug.com/Music/Band-Logos/i-9Jg3Q3G/0/MRZXmZZ6WjGjfdPjHXDzJf8PqdqsFXXjVNGPsnkfD/XL/Blind%20Alibi-XL.jpg",
+  "Brand New Day":
+    "https://photos.smugmug.com/Music/Band-Logos/i-L4m7swh/0/KZRJX3fsmfSkndnTHvVcZJLVf5hVnND49VVMhL92m/M/Brand%20New%20Day-M.jpg",
+  "Broken Empire":
+    "https://photos.smugmug.com/Music/Band-Logos/i-C8FkPgF/0/MBXk2dqwsbNPWqL8g6vWLhxvpvMRGxjKWKMVvQ7L9/L/Broken%20Empire-L.jpg",
+  "Burning Time":
+    "https://photos.smugmug.com/Music/Band-Logos/i-WChJBx8/0/KvpTfhC7qvpSFPT5Jr6TqmRRbRP2vZT2BmLhkKP9B/X2/Burning%20Time-X2.jpg",
+  Cabal:
+    "https://photos.smugmug.com/Music/Band-Logos/i-SLwBmDm/0/LWv4LCZQnKVJncSWH4BV86w3d6p9N5jbkdfxgJVdV/L/Cabal-L.jpg",
 };
 
 const REGION_IMAGES = {
-  Local: "https://photos.smugmug.com/photos/i-SCzbkmj/1/KjHvTQVKnSz36KmxFS5c2MrtLhgm9Wc8mTghFb5R8/M/i-SCzbkmj-M.png",
-  Regional: "https://photos.smugmug.com/photos/i-x5ncQx7/0/KcWqCsJ2cD94cz6fn2hwGxJjdMrbV6kSCXQ3ssGGw/S/i-x5ncQx7-S.jpg",
-  National: "https://photos.smugmug.com/photos/i-3Kk8S5k/0/MznDGX8kBgM99xp6RKNKf4L4VHtnKrx3ghQLF85h7/S/i-3Kk8S5k-S.jpg",
-  International: "https://photos.smugmug.com/photos/i-jqJ9RJd/0/LhpXpWQjX2Gbbh9nn4DsjxvwMWZBDWSMpSFRfPxJq/S/i-jqJ9RJd-S.jpg"
+  Local:
+    "https://photos.smugmug.com/photos/i-SCzbkmj/1/KjHvTQVKnSz36KmxFS5c2MrtLhgm9Wc8mTghFb5R8/M/i-SCzbkmj-M.png",
+  Regional:
+    "https://photos.smugmug.com/photos/i-x5ncQx7/0/KcWqCsJ2cD94cz6fn2hwGxJjdMrbV6kSCXQ3ssGGw/S/i-x5ncQx7-S.jpg",
+  National:
+    "https://photos.smugmug.com/photos/i-3Kk8S5k/0/MznDGX8kBgM99xp6RKNKf4L4VHtnKrx3ghQLF85h7/S/i-3Kk8S5k-S.jpg",
+  International:
+    "https://photos.smugmug.com/photos/i-jqJ9RJd/0/LhpXpWQjX2Gbbh9nn4DsjxvwMWZBDWSMpSFRfPxJq/S/i-jqJ9RJd-S.jpg",
 };
 
 // region → letter → bands
@@ -28,7 +70,8 @@ const BANDS = {
     "O-C": [
       { name: "13 High" },
       { name: "3FD" },
-	    { name: "G-Gig" },
+      { name: "G-Gig" },
+      { name: "Absence of the Sun" },
       { name: "Acoustified" },
       { name: "Afterblack" },
       { name: "Alions" },
@@ -43,7 +86,7 @@ const BANDS = {
       { name: "Ashen Grey" },
       { name: "Audio Apocalypse" },
       { name: "Badtude" },
-      { name: "The Band Apollo" },  
+      { name: "The Band Apollo" },
       { name: "Battery Steele" },
       { name: "Beautiful Pain" },
       { name: "Before the Betrayal" },
@@ -73,17 +116,38 @@ const BANDS = {
       { name: "Cradle II Grave" },
       { name: "Creatures" },
       { name: "Cryptid Slaughter" },
-      { name: "Culling the Herd" }
+      { name: "Culling the Herd" },
     ],
     "D-G": [],
     "H-K": [],
     "L-O": [],
     "P-S": [],
-    "T-Z": []
+    "T-Z": [],
   },
-  Regional: { "O-C": [], "D-G": [], "H-K": [], "L-O": [], "P-S": [], "T-Z": [] },
-  National: { "O-C": [], "D-G": [], "H-K": [], "L-O": [], "P-S": [], "T-Z": [] },
-  International: { "O-C": [], "D-G": [], "H-K": [], "L-O": [], "P-S": [], "T-Z": [] }
+  Regional: {
+    "O-C": [],
+    "D-G": [],
+    "H-K": [],
+    "L-O": [],
+    "P-S": [],
+    "T-Z": [],
+  },
+  National: {
+    "O-C": [],
+    "D-G": [],
+    "H-K": [],
+    "L-O": [],
+    "P-S": [],
+    "T-Z": [],
+  },
+  International: {
+    "O-C": [],
+    "D-G": [],
+    "H-K": [],
+    "L-O": [],
+    "P-S": [],
+    "T-Z": [],
+  },
 };
 // ------- /CONFIG -------
 
@@ -153,7 +217,8 @@ function showLetterBands(region, letter, bandsArr) {
   resultsEl.innerHTML = "";
 
   if (!bandsArr.length) {
-    resultsEl.innerHTML = '<div class="empty">No bands in this group yet.</div>';
+    resultsEl.innerHTML =
+      '<div class="empty">No bands in this group yet.</div>';
     return;
   }
 
@@ -177,7 +242,7 @@ function showLetterBands(region, letter, bandsArr) {
     } else {
       const none = document.createElement("div");
       none.className = "empty";
-      none.textContent = "No logo for this band.";
+      none.textContent = "N/A";
       thumb.appendChild(none);
     }
 
@@ -210,12 +275,12 @@ function buildTree() {
       const img = document.createElement("img");
       img.src = imgSrc;
       img.alt = region;
-      img.style.height = "200px";         // adjust size as you like
+      img.style.height = "200px"; // adjust size as you like
       img.style.objectFit = "contain";
       img.style.display = "block";
       regionSum.appendChild(img);
     } else {
-      regionSum.textContent = region;    // fallback for any future regions
+      regionSum.textContent = region; // fallback for any future regions
     }
     regionDet.appendChild(regionSum);
 
@@ -246,7 +311,9 @@ function buildTree() {
             const li = document.createElement("li");
             const btn = document.createElement("button");
             btn.textContent = b.name;
-            btn.addEventListener("click", () => showBandCard(region, letter, b));
+            btn.addEventListener("click", () =>
+              showBandCard(region, letter, b),
+            );
             li.appendChild(btn);
             ul.appendChild(li);
           });
