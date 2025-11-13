@@ -1,769 +1,105 @@
-// ------- CONFIG -------
-const SMUG = {
-  NICKNAME: "vmpix",
-  BASE_FOLDER: "Music/Archives/Bands",
-}
-
-// add logo URLs here when you have them
-const LOGOS_MANUAL = {
-  // "13 High": "https://vmpix.smugmug.com/Music/Band-Logos/i-XcmVMQF/0/M/i-XcmVMQF-M.jpg",
-  "13 High":
-    "https://photos.smugmug.com/photos/i-FRgjKKD/0/KhBshxQbV4Gk3PWZDRRW2NBLCz88LMT4nPW7zKJsw/S/i-FRgjKKD-S.png",
-  "3FD":
-    "https://photos.smugmug.com/Music/Band-Logos/i-XcmVMQF/0/KVkbqX7GW9dhpdLSSz8vxR99fNtxXTWkXhdJXTZDJ/X2/3FD-X2.jpg",
-  "6-Gig":
-    "https://photos.smugmug.com/photos/i-FRgjKKD/0/KhBshxQbV4Gk3PWZDRRW2NBLCz88LMT4nPW7zKJsw/S/i-FRgjKKD-S.png",
-  "A River of Trees":
-    "https://photos.smugmug.com/Music/Band-Logos/i-HbvKFrV/0/MQRGgZNRm3nKkx4xCNv7s5KqXxwPMTj6thZdTgHZZ/X2/A%20River%20of%20Trees-X2.jpg",
-  "Absence of the Sun":
-    "https://photos.smugmug.com/Music/Band-Logos/i-j39NTr3/0/MV7cxTwRtrTBbjTsJ4XvfWsWL3kwqVNRLCjsjdrvL/S/Absence%20of%20the%20Sun-S.jpg",
-  Acoustified:
-    "https://photos.smugmug.com/Music/Band-Logos/i-PQJkT2p/0/K4wJX3zVsRWMpgFkMPqBcHntt3ctDwzm66QqX5Rbc/L/Acoustified-L.jpg",
-  Adema:
-    "https://photos.smugmug.com/Music/Band-Logos/i-wGhMBXr/0/LGFpwCw8w8tBHCrtw6LHFDnV8xqnSSjhtW4SpWgBR/XL/Adema-XL.jpg",
-  Aerosmith:
-    "https://photos.smugmug.com/Music/Band-Logos/i-5mfGqgd/0/NJLdr6MzC6mwBtMSNmJLv7t8SVZsD37nWF3Q3fd7G/X2/Aerosmith-X2.jpg",
-  Afterblack:
-    "https://photos.smugmug.com/Music/Band-Logos/i-5PtmNNj/0/LcQjGLX7tXDgNLDWvSBVNLPDRxwphpkVgkvncNQhK/X2/Afterblack-X2.jpg",
-  Alions:
-    "https://photos.smugmug.com/photos/i-fHWLWgV/0/L55C44pDMtzTkkdgsqntGkNz6WdXPcfntxSNpLpFP/S/i-fHWLWgV-S.jpg",
-  "All That Remains":
-    "https://photos.smugmug.com/Music/Band-Logos/i-wS6N278/0/McqrGqb9GPknrwJQBjjSDsMqnmM2DLpCTXvtFzBsV/X2/All%20That%20Remains-X2.jpg",
-  "Alter the Tides":
-    "https://photos.smugmug.com/photos/i-zDvGGj2/0/Kdw7D9CBqP86dX8TPTw6JzfMsTTptPCgvSn6zwFvp/S/i-zDvGGj2-S.png",
-  Amanita:
-    "https://photos.smugmug.com/photos/i-3dL8kfD/0/LPDQgzSHrGKZdQCJ5ShrWcgTrwkfZCqk8vWz2Pgmq/M/i-3dL8kfD-M.jpg",
-  "Amon Amarth":
-    "https://photos.smugmug.com/Music/Band-Logos/i-Ptj76sD/0/NZnfLPM5f2fjTMw2h5XMBJGQDJF8KLbcJK7r7jZsK/X2/Amon%20Amarth-X2.jpg",
-  "Among Shadows":
-    "https://photos.smugmug.com/photos/i-fWBP2sT/0/LF28tqDzLhNZgZ4T8djJr5QfLMHnTCfNgZ4xQkF7d/M/i-fWBP2sT-M.png",
-  "Anatomy of a Thief":
-    "https://photos.smugmug.com/photos/i-4kdTtbF/0/NhVsB8B2Q7vFLz2StNrdRBsv6KtDB8RRVsBpp7QtW/M/i-4kdTtbF-M.jpg",
-  "Arta'Sin":
-    "https://photos.smugmug.com/photos/i-9xxWH27/0/NNnQJg6LjjmvQ22nM5scBZTMX69Bd5xMvh3MLPrmx/M/i-9xxWH27-M.jpg",
-  "Ascent to Power":
-    "https://photos.smugmug.com/photos/i-hBxRmNx/0/NX8nPCFMf8LkzGxCds9pMFtJ29w8BjXwRnhpd4J8P/M/i-hBxRmNx-M.jpg",
-  "Ashen Grey":
-    "https://photos.smugmug.com/photos/i-mKTmsVz/0/LM98RHH956dBvGzQB4R3rkn8NfsSCRmStPbmBrh2m/M/i-mKTmsVz-M.jpg",
-  Avatar:
-    "https://photos.smugmug.com/Music/Band-Logos/i-22wDFvS/0/NHcXjMPq4JxV3BN3cCrwXft37HzJnmwp2kZx6DZv4/X2/Avatar-X2.jpg",
-  "The Band Apollo":
-    "https://photos.smugmug.com/Music/Band-Logos/i-LpTjbhd/0/L4mGjhgWzHLbrvFZtZqV7GPCxckxgFbfmT5KqfNFQ/X2/Band%20Apollo%2C%20The-X2.jpg",
-  Bastardane:
-    "https://photos.smugmug.com/Music/Band-Logos/i-mvfFc5v/0/Kz7WbMvsQw4V9ttjB2jKMFnS5BKDcGz595KjtbqLR/X2/Bastardane-X2.jpg",
-  Beartooth:
-    "https://photos.smugmug.com/Music/Band-Logos/i-C76rV5x/0/LzRbDzGCwWJ7zX7xW7qFRCC9LRN9fRDcVGqRsgMrB/X2/Beartooth-X2.jpg",
-  "Before the Betrayal":
-    "https://photos.smugmug.com/Music/Band-Logos/i-dz9CmWC/0/M4b9tFqwPxC9gZw57xqbFbWp5SDhfCSvf6dxrqq3w/S/Before%20the%20Betrayal-S.jpg",
-  "Black Box":
-    "https://photos.smugmug.com/Music/Band-Logos/i-H2S4sbn/1/MTTk7wQCxW8dSX7J5Cq23rBCF96dJr2RQCwjxLSKT/X2/Black%20Box-X2.png",
-  "Black Orange":
-    "https://photos.smugmug.com/Music/Band-Logos/i-cNnJ8wz/0/NXFmZQh9jL7rpTbKwVMNbNKfd3NRq7K8qDmpNrfQq/X2/Black%20Orange-X2.jpg",
-  "Black Stone Cherry":
-    "https://photos.smugmug.com/Music/Band-Logos/i-wwGvb8p/0/K7gVHSvg3s3QpQSZzqCQbQ6CVdMqC2zz56cqXWW8q/X2/Black%20Stone%20Cherry-X2.jpg",
-  "Black Vinegar":
-    "https://photos.smugmug.com/Music/Band-Logos/i-jDghVqX/0/LRXQVGCrV9N5gdFtN7dDJZP2kVnmGwzP9GTSc3khf/L/Black%20Vinegar-L.jpg",
-  Blackguard:
-    "https://photos.smugmug.com/Music/Band-Logos/i-SqSBTfc/0/LK5Lg3Srh68gW8vpVBKZcCsjjFK9TrQkds9JTs57j/X2/Blackguard-X2.jpg",
-  "Blind Alibi":
-    "https://photos.smugmug.com/Music/Band-Logos/i-9Jg3Q3G/0/MRZXmZZ6WjGjfdPjHXDzJf8PqdqsFXXjVNGPsnkfD/XL/Blind%20Alibi-XL.jpg",
-  "Bonded By Blood":
-    "https://photos.smugmug.com/Music/Band-Logos/i-JPqhpm4/0/L5VM9FChxP9NT9RCzwTPctgBJhcdCV4k2wDb3nncF/X2/Bonded%20by%20Blood-X2.jpg",
-  "Brand New Day":
-    "https://photos.smugmug.com/Music/Band-Logos/i-L4m7swh/0/KZRJX3fsmfSkndnTHvVcZJLVf5hVnND49VVMhL92m/M/Brand%20New%20Day-M.jpg",
-  "Broken Empire":
-    "https://photos.smugmug.com/Music/Band-Logos/i-C8FkPgF/0/MBXk2dqwsbNPWqL8g6vWLhxvpvMRGxjKWKMVvQ7L9/L/Broken%20Empire-L.jpg",
-  Buckcherry:
-    "https://photos.smugmug.com/Music/Band-Logos/i-2ckpBd4/0/MVkx9rVxtxnr3cWcCCbdr64JxwbDJNZNND9cgmrrx/X2/Buckcherry-X2.jpg",
-  "The Burial Curse":
-    "https://photos.smugmug.com/Music/Band-Logos/i-52sGwsR/0/NZDs5rzLTtnwG7GjGQHpSmWrqdg2FC9V6LQzvjjkz/L/The%20Burial%20Curse-L.jpg",
-  "Burning Time":
-    "https://photos.smugmug.com/Music/Band-Logos/i-WChJBx8/0/KvpTfhC7qvpSFPT5Jr6TqmRRbRP2vZT2BmLhkKP9B/X2/Burning%20Time-X2.jpg",
-  Cabal:
-    "https://photos.smugmug.com/Music/Band-Logos/i-SLwBmDm/0/LWv4LCZQnKVJncSWH4BV86w3d6p9N5jbkdfxgJVdV/L/Cabal-L.jpg",
-  "Calibrating the Calamity":
-    "https://photos.smugmug.com/Music/Band-Logos/i-WpKSz88/0/KXFfPc7C9LrC8zH2t4nTXjbgHWzZ822dC3C8V7xwV/X2/Calibrating%20the%20Calamity-X2.jpg",
-  "Capture the Sun":
-    "https://photos.smugmug.com/Music/Band-Logos/i-rc3TQWw/0/MPJx4P8XJctjVbFW2fP96vKrKbxMmbhtfLbHnHHZj/L/Capture%20the%20Sun-L.jpg",
-  Cavemanifesto:
-    "https://photos.smugmug.com/Music/Band-Logos/i-bw9Mrv4/0/NGxqzcXwhS8V4Rm6FM2fHRVvdDZTJvQrm7tkVD98j/X2/Cavemanifesto-X2.jpg",
-  "Civil Disturbance":
-    "https://photos.smugmug.com/Music/Band-Logos/i-86SdM8F/0/KbpHMWnmwg2Z9VsN6NdnCxqWKfZHJphX6DtVbVfdM/M/Civil%20Disturbance-M.jpg",
-  Core: "https://photos.smugmug.com/Music/Band-Logos/i-3kZTKqD/0/MCkLTtWb52SMgt3sgzvDVdPtFxR2n2dbxB49B8W2J/X2/Core-X2.jpg",
-  "Crown Lands":
-    "https://photos.smugmug.com/Music/Band-Logos/i-8txFRFj/0/NcFMj7SLzSxpQhLpLx8cTqnKVCPcpcLR8LD4kfQL5/X2/Crown%20Lands-X2.jpg",
-  "Culling the Herd":
-    "https://photos.smugmug.com/Music/Band-Logos/i-FzLL5rj/0/KF43JppWJDGz32bHf8VwGNHHkS3dLcX5jkP887wKB/M/Culling%20the%20Herd-M.jpg",
-  Cytokine:
-    "https://photos.smugmug.com/Music/Band-Logos/i-D5wB3Zb/0/L8FKx6zDPHJgfb8VnWqDWddwJjCb2fJFhkQjcrKJW/X3/Cytokine-X3.jpg",
-  "Dark Rain":
-    "https://photos.smugmug.com/Music/Band-Logos/i-nXSFZ9Q/0/KPcfFvV3DqhQjD9fBgszbWXDpcDtZNBPTdSW8x72w/X2/Dark%20Rain-X2.jpg",
-  "Dawn of End":
-    "https://photos.smugmug.com/Music/Band-Logos/i-ct7p6s9/0/NjR9jFttkKNz4z8LmvDw3vLwH8LTbFdMrP48ZsLtM/X2/Dawn%20of%20End-X2.jpg",
-  "Dead By Wednesday":
-    "https://photos.smugmug.com/Music/Band-Logos/i-hgrf4D8/0/KcrNPHmjVvd6zrRv2cPFJTqmpwpqZxZdKkndXH4B4/X2/Dead%20By%20Wednesday-X2.jpg",
-  "Dead In Your Eyes":
-    "https://photos.smugmug.com/Music/Band-Logos/i-3tP8S4N/0/KPFbgqW6fcL7hCVpfKBV5MvhFSmSP92Fhd23NdHMm/XL/Dead%20In%20Your%20Eyes-XL.jpg",
-  "Dead Season":
-    "https://photos.smugmug.com/Music/Band-Logos/i-vf6WpJp/0/L4JwxKgx5mRpQCDNmFhRjtJCGR9wPKtsbqGWG57zG/L/Dead%20Season-L.jpg",
-  "Deadly Desire":
-    "https://photos.smugmug.com/Music/Band-Logos/i-4WcQ44S/0/LnppcQ5JjM97Ms2dMGHBJMFnMLCt8kKQCgGMjg6fS/X2/Deadly%20Desire-X2.jpg",
-  "Death Rattle":
-    "https://photos.smugmug.com/Music/Band-Logos/i-jGRZfj4/0/KgLQdmpGcj5XcvDPQJVvHBfLTT8kT54nMvKHXrG7H/X2/Death%20Rattle-X2.jpg",
-  "Death's Hand":
-    "https://photos.smugmug.com/Music/Band-Logos/i-t6GZWM2/0/M7bmwNn9VQBFkggmdcHscMQR8gkHFjQvL232rCNDj/X2/Death%27s%20Hand-X2.jpg",
-  "Deep Purple":
-    "https://photos.smugmug.com/Music/Band-Logos/i-8S344qv/0/NGHQVwXCLkwq34mznpM3xdG2D9XQzGsfjL7KPGM5d/Th/Deep%20Purple-Th.jpg",
-  "Destination: Void":
-    "https://photos.smugmug.com/Music/Band-Logos/i-srmMLVq/0/KZ9xbMQnjXvz67kRk4qpNhCvtCMCvRsfWQTndn9HZ/X2/Destination%20Void-X2.jpg",
-  "Devil's Nite Out":
-    "https://photos.smugmug.com/Music/Band-Logos/i-krk8KJv/0/MQNWRPbwxmKhvrJk4Prt2vzWghnB4m532vH3ZB9Hh/X2/Devil%27s%20Nite%20Out-X2.jpg",
-  Diablooo:
-    "https://photos.smugmug.com/Music/Band-Logos/i-kPVJSVD/0/NMgkfSMSfbVs9qR6hdMS5PTBZs9XmWRNJBFPZnHwD/X2/Diablooo-X2.jpg",
-  "Diamond Edge":
-    "https://photos.smugmug.com/Music/Band-Logos/i-JCFDRg4/0/M8CqcLnLTwQ8vtJnkKSz8ngJLrBJvkQTCFWwjGtqK/X2/Diamond%20Edge-X2.jpg",
-  "Dirty Rotten Winter":
-    "https://photos.smugmug.com/Music/Band-Logos/i-qVK4CBF/0/NZNnphQvv2cSCcQM2wr67Sp5XKMjZ7LVRVssX5kbs/X2/Dirty%20Rotten%20Winter-X2.jpg",
-  "Divison North":
-    "https://photos.smugmug.com/Music/Band-Logos/i-4P8tNvq/0/KkkFJ3jDTFDwXWHqfv8JWvPVV6ZxkmXc5KHjX86VD/X2/Divison%20North-X2.jpg",
-  "Drown in Filth":
-    "https://photos.smugmug.com/Music/Band-Logos/i-RNQVdkD/0/KnZkmbWjbghjr73wMZjDzr4Xx6bcHTj5hTzsdvQHm/XL/Drown%20in%20Filth-XL.jpg",
-  "Drunk in Public":
-    "https://photos.smugmug.com/Music/Band-Logos/i-HCL5B8J/0/KWpH5kCR8DPRcLK4fPMxtqcn6Cf9TVSrk5S4wr2nr/L/Drunk%20in%20Public-L.jpg",
-  "Echo Ritual":
-    "https://photos.smugmug.com/Music/Band-Logos/i-vGN2B5q/0/KFRCxvcZNkS2KFNJ4dNBSzBRRp9NDxpRSmf25sGGQ/X2/Echo%20Ritual-X2.jpg",
-  "Empty Halls":
-    "https://photos.smugmug.com/Music/Band-Logos/i-NC8bJkb/0/NKmbGNDHp46c5JzWpbmh6DZrRFjdh4DbkgwTtb3zK/XL/Empty%20Halls-XL.jpg",
-  Endgame:
-    "https://photos.smugmug.com/Music/Band-Logos/i-jvp6RGh/0/MdG5Q9vCQr9TCbcFS9NNSL33NHZ2NMcsCR8JNHqJG/XL/Endgame-XL.jpg",
-  Estabrook:
-    "https://photos.smugmug.com/Music/Band-Logos/i-8Bwnc5k/0/LN3R222CzM5Nwk5fHvWMvC3BCNdjZ9Vg828FKJtJF/XL/Estabrook-XL.jpg",
-  "Ethereal Rot":
-    "https://photos.smugmug.com/Music/Band-Logos/i-5DgQX2q/0/NccGp5RcKgQ5CCL3RDdg9sjVzFnBv4JFW5z2KkL6j/X2/Ethereal%20Rot-X2.jpg",
-  Evanescence:
-    "https://photos.smugmug.com/Music/Band-Logos/i-gfscrG2/0/KWkBmLrTzP4T8wNspPfc476WFS4qg8Pk5bFPGFkwq/L/Evanescence-L.jpg",
-  Extreme:
-    "https://photos.smugmug.com/Music/Band-Logos/i-bcndGGX/0/L8TWKq5j9LwSk4sDnM4KqqBzTCKzjh94QvWDHXQvc/X2/Extreme-X2.jpg",
-  "The Fall of Babylon":
-    "https://photos.smugmug.com/Music/Band-Logos/i-LZqSwsV/0/LFLNMkNB8KLxBqXh7nTnH6HkLtthgQmQXFB2hGXPL/XL/The%20Fall%20of%20Babylon-XL.jpg",
-  "Fever 333":
-    "https://photos.smugmug.com/Music/Band-Logos/i-2rX3T5g/0/NDTShL7x59WG7dDT39W7QFrVsJ2HM549NWgGqXcnc/X2/Fever%20333-X2.jpg",
-  "Fifth Freedom":
-    "https://photos.smugmug.com/Music/Band-Logos/i-FNtR4ZP/0/MBM3qm3prmtK76tdkKDpqk3rMmtJWx4M6Xw92PcDL/X2/Fifth%20Freedom-X2.jpg",
-  "Forbidden Covenant":
-    "https://photos.smugmug.com/Music/Band-Logos/i-vBchr2h/0/KfnmhWQbKDjwVtFtQPtLdc4kdFKpQKkFf8TWbXRVF/M/Forbidden%20Covenant-M.jpg",
-  "Four Feet Out":
-    "https://photos.smugmug.com/Music/Band-Logos/i-JDjvDFw/0/LKTxv9bg7bQKXKfGSrnMZgvRShstqs2NVzxNgFrkM/S/Four%20Feet%20Out-S.jpg",
-  Fozzy:
-    "https://photos.smugmug.com/Music/Band-Logos/i-rnjR4Rv/0/LZbWNJ763FxJhNttN5HJ8Dbkg54gpvnTb9hgdtZb5/X2/Fozzy-X2.jpg",
-  "Friday Night Lites":
-    "https://photos.smugmug.com/Music/Band-Logos/i-zJTK9HH/0/KfHnQ6M83mLRnKWCXZF6zNcrPJNcZc28dmj6HLQmL/XL/Friday%20Night%20Lites-XL.jpg",
-  Funnel:
-    "https://photos.smugmug.com/Music/Band-Logos/i-XmXstF2/0/LcXrBPC2KXBfZ7PGqMjxb2CRNHJbZ29LgMHLvCbcQ/M/Funnel-M.jpg",
-  Godsmack:
-    "https://photos.smugmug.com/Music/Band-Logos/i-j23dmnM/0/NCzKcrDkgpTdTLrW2SG3m44Z39tq2QBzhNpxwm8hN/XL/Godsmack-XL.jpg",
-  "The Hailing Tides":
-    "https://photos.smugmug.com/Music/Band-Logos/i-RBFwJ4f/0/K7FN4cRJQp4LSLRzKcJtRDnkGhCmX4NTDzp26W6Gc/XL/The%20Hailing%20Tides-XL.jpg",
-  "Hed PE":
-    "https://photos.smugmug.com/Music/Band-Logos/i-cWLQtvx/0/Ngs6ZkFSqs2ksgjLJSxVnRCkxW9hvVQ3bKjkqNwrj/XL/Hed%20PE-XL.jpg",
-  "Hogan's Alley":
-    "https://photos.smugmug.com/Music/Band-Logos/i-R5LZK2g/0/NTm8JdGnh9DdpSM94sCCTBVTV9hnLDKNtDG9qJN8t/M/Hogans%20Alley-M.jpg",
-  "Holy Filth":
-    "https://photos.smugmug.com/Music/Band-Logos/i-L52zWF8/0/KVhTB3PCppv7Jsq555pbGdfP7jj2mMTvHVpqDccbw/X2/Holy%20Filth-X2.jpg",
-  "I, The Conqueror":
-    "https://photos.smugmug.com/Music/Band-Logos/i-qtvK2PM/0/Mvv2DSPxxDDv7r7Gk4qwwh34wmd8TRgfgzfJv9m7K/L/I%2C%20The%20Conqueror-L.jpg",
-  "Identity Crisis":
-    "https://photos.smugmug.com/Music/Band-Logos/i-mhg8d33/0/LT8pfHFLb6m3SRkThGFTHkC887b6pLHMB2vrDMZ5z/X2/Identity%20Crisis-X2.jpg",
-  "In Flames":
-    "https://photos.smugmug.com/Music/Band-Logos/i-5PhWsWk/0/KqVxqCd2LNX8h8HmLShv2kVxrhbttwQvZ7jBT7Crw/S/In%20Flames-S.jpg",
-  "In The Wind":
-    "https://photos.smugmug.com/Music/Band-Logos/i-432fb3b/0/NN68tdPnmSXsWHR2kwnD2x59MVM39mwFWHfr6jR54/XL/In%20The%20Wind-XL.jpg",
-  "Inhuman Nature":
-    "https://photos.smugmug.com/Music/Band-Logos/i-sh4TPZT/0/NGKtCM9kh8BK62dsfdHCz2nqkhpnBzmZTRf4KvZjp/S/Inhuman%20Nature-S.jpg",
-  Interloc:
-    "https://photos.smugmug.com/Music/Band-Logos/i-WT4KQc6/0/K2Mc8KFXmRn43PL449XsFnqgDZWWfSxBjd2CtqDJB/M/Interloc-M.jpg",
-  "Iron Dynamite":
-    "https://photos.smugmug.com/Music/Band-Logos/i-kF7svFD/0/KFQfxB7t4gvbrxXDFvXrS8DbPNgVzHVsXR6SCSZrG/XL/Iron%20Dynamite-XL.jpg",
-  "Iron Gate":
-    "https://photos.smugmug.com/Music/Band-Logos/i-9FPGbcs/0/LGKTv2FGRBDzfRbt3mGfcWhT3jSkNtQQRWtwTt6nG/X2/Iron%20Gate-X2.jpg",
-  "In The Kingdom of Nightmares":
-    "https://photos.smugmug.com/Music/Band-Logos/i-kT2JQHm/0/LFgSxq8NqNf6S2kB9V3Wj93k4Z5kTFBnFQbcwhxG9/XL/ITKON-XL.jpg",
-  "In The Key of Suffering":
-    "https://photos.smugmug.com/Music/Band-Logos/i-GtcpTkx/0/NSLZR2DGhk2Lkjm8V3hhZSqV24r5ZnZ6wkfrnwkdc/L/ITKOS-L.jpg",
-  "Joyous Wolf":
-    "https://photos.smugmug.com/Music/Band-Logos/i-8TfzPcR/0/MqMzHHgPgw6NLPTwgJgh2sm5k5w3L85tD3f68PRXP/X2/Joyous%20Wolf-X2.jpg",
-  "Killswitch Engage":
-    "https://photos.smugmug.com/Music/Band-Logos/i-nXdk7FT/0/MMgQbQgg5JTNzKNLbFBkfr86FCRCnrp6NvzrrTf3P/X2/Killswitch%20Engage-X2.jpg",
-  Kittie:
-    "https://photos.smugmug.com/Music/Band-Logos/i-73Q54bJ/0/LgwNd8fLBsVJx5LCzcXrhjhCgHnzLhLmskmMftGW9/S/Kittie-S.jpg",
-  Kolossos:
-    "https://photos.smugmug.com/Music/Band-Logos/i-GzBhxgx/0/MvSCfQHqtkDQmwP3ctD7GGVLfJvzQQK8ptRmFcdtW/L/Kolossos-L.jpg",
-  Kryptosporidium:
-    "https://photos.smugmug.com/Music/Band-Logos/i-k7W6tnN/0/Kc9t296qzhVnpDT8z2325RsJ7mvjpnTjVPx8j7gdn/X2/Kryptosporidium-X2.jpg",
-  "Lacuna Coil":
-    "https://photos.smugmug.com/Music/Band-Logos/i-HmPPmwK/0/KsCcKB8XpNz2MTNmJN5mjfpQJDdnmhHRqb737L7HD/X2/Lacuna%20Coil-X2.jpg",
-  "Lamb of God":
-    "https://photos.smugmug.com/Music/Band-Logos/i-jk6wPbq/0/NhjfRB4FCzW5xDRMfLxwc6SMcwMdsVxbXkLhf9DSb/X2/Lamb%20of%20God-X2.jpg",
-  "Last Ones Alive":
-    "https://photos.smugmug.com/Music/Band-Logos/i-sZZpsLD/0/K8mqrVtjVgMF4JzqHbQkrxHsSCcFMbpXswbmTbnbf/XL/Last%20Ones%20Alive-XL.jpg",
-  "Lethal Creed":
-    "https://photos.smugmug.com/Music/Band-Logos/i-LwXgBvK/0/KpmRLKPFfKzq8ZQ6WXzW7M3g4V9bGF6prJ5WZD2NS/X2/Lethal%20Creed-X2.jpg",
-  "Lights Out":
-    "https://photos.smugmug.com/Music/Band-Logos/i-kB27QRZ/0/KTWGqGsvJgq7QPMmdHqrtvBT4FxrrNkdSLqQ6WkcT/Ti/Lights%20Out-Ti.jpg",
-  Loki: 
-    "https://photos.smugmug.com/Music/Band-Logos/i-CZV9D4d/0/M79Z6XtQZHtJNzJG2xTJF5KP3pQncd5dbCkvQwDQ7/L/Loki-L.jpg",
-  "Lone Wolf James":
-    "https://photos.smugmug.com/Music/Band-Logos/i-Xm3CT3S/0/KRHPhjVCJ35NtRKmdLFXKFGtNqZPB2LVH5mJ7TTtV/X2/Lone%20Wolf%20James-X2.jpg",
-  Mammothor:
-    "https://photos.smugmug.com/Music/Band-Logos/i-s4WfQDX/0/NhDtkS4fV4Qfg8W2BWhFpgtKx5NP9cz42HQqjghk6/X2/Mammothor-X2.jpg",
-  Manifest:
-    "https://photos.smugmug.com/Music/Band-Logos/i-3C7N8zk/0/Lnj4rGBpKJFGbSRq6w4xXDLBJpMCKNRDMwwxTTLj6/X2/Manifest-X2.jpg",
-  Manuel:
-    "https://photos.smugmug.com/Music/Band-Logos/i-24p53hq/0/MX8fMtbkFzk7MdL4Z95jbTmttKh8z23MmKLsWVLDR/L/Manuel-L.jpg",
-  "Midnight Possession":
-    "https://photos.smugmug.com/Music/Band-Logos/i-Wxzjz4W/0/KKcBpnkPJBK7PMhnqzm4gq8QbCf7bfL8pzc7Htn25/X2/Midnight%20Possession-X2.jpg",
-  MindShiver:
-    "https://photos.smugmug.com/Music/Band-Logos/i-3VXLRFk/0/M3bfN4PzRwZpnQw7jdkpP3Qm9qxwRdFTpX7rwk8m5/M/Mindshiver-M.jpg",
-  Misgyded:
-    "https://photos.smugmug.com/Music/Band-Logos/i-Fzb8Knw/0/LVTw6FGc85hJmWW9F43mJDrjsrVb2t256RbmBznKq/X2/Misgyded-X2.jpg",
-  Mound:
-    "https://photos.smugmug.com/Music/Band-Logos/i-GFzSJMJ/0/KPGhJdgqQvLs2PQtJ45Pm9wtSc9xDGjk2LsN5qD83/X2/Mound-X2.jpg",
-  Murcielago:
-    "https://photos.smugmug.com/Music/Band-Logos/i-dfQb9H7/0/MdgQzckpxvD2CnJCH9L5f47gckVd49PNjSGVSgH49/X2/Murcielago-X2.jpg",
-  Mushroomhead:
-    "https://photos.smugmug.com/Music/Band-Logos/i-mjzRcfh/0/Mqb7kdfs3pDz9wZFVPJ4JQmHtnxdtRxL6cbpjQnHS/X2/Mushroomhead-X2.jpg",
-  Ouvre:
-    "https://photos.smugmug.com/Music/Band-Logos/i-sJTQTDd/0/KDdBkQJwKLSkkPWDM78nnC6sdzbxKtWpsccDSzPZw/X2/Ouvre-X2.jpg",
-  "Paradise is Cancelled":
-    "https://photos.smugmug.com/Music/Band-Logos/i-gmKd5N7/0/MFxzChrNkSNZkzwt6wgmwKsjWMHDrQcBL8vksPLrc/M/Paradise%20is%20Cancelled-M.jpg",
-  Ponder:
-    "https://photos.smugmug.com/Music/Band-Logos/i-p3wc3Nq/0/KPsXdNdCLw4HdSmPRhw2twzNV64nS6xbr368DM6Q8/X2/Ponder-X2.jpg",
-  "Powerman 5000":
-    "https://photos.smugmug.com/Music/Band-Logos/i-rx2KLvL/0/Ld5rXnxMBTPzPwGkMdTpHQJMJcCHbxcgkPkHL6FBt/X2/Powerman%205000-X2.jpg",
-  "Project 246":
-    "https://photos.smugmug.com/Music/Band-Logos/i-RPvjR2m/0/K9zfxnJM86tS4rRpDRwcbtzRPZQnnTgBXRKtDSxQF/S/Project%20246-S.png",
-  "Prospect Hill":
-    "https://photos.smugmug.com/Music/Band-Logos/i-T5Cp48T/0/NPnQgvN5FvXrKXnJWbkPmPQhG3885nsGvBdhnFNHF/X2/Prospect%20Hill-X2.jpg",
-  Pulsifier:
-    "https://photos.smugmug.com/Music/Band-Logos/i-gm4NwCz/0/LVP8H3R7n4WPNBsQVJqDV4WcZkppzqnhN8m2rJm39/L/Pulsifier-L.jpg",
-  "Pushing the Clock":
-    "https://photos.smugmug.com/Music/Band-Logos/i-X3mWQnt/0/NXhMpS66JFrGrQFxW53kRJ2NDR3NMZmfhhHvD6x3t/XL/Pushing%20the%20Clock-XL.jpg",
-  "The Resistance":
-    "https://photos.smugmug.com/Music/Band-Logos/i-NQgX7wc/0/KvVXq8kqKqRtB8HsRM7WhCrqVxZ7FmkmxwKSGntxp/L/The%20Resistance-L.jpg",
-  "Re:Vision":
-    "https://photos.smugmug.com/Music/Band-Logos/i-PmXJVpp/0/NfZH9KWQJJf2hZfm29vmkqkvPDPFsQvB5WtmZgbZf/X2/Revision-X2.jpg",
-  Ruin: 
-    "https://photos.smugmug.com/Music/Band-Logos/i-hz8MQvT/0/KsSQhHRJjjgxk8ngDCxfsZVW26PbsQ2rNTvr3QQdJ/L/Ruin-L.jpg",
-  "Saturn's Return":
-    "https://photos.smugmug.com/Music/Band-Logos/i-W2kkJ3j/0/KgzN7g36jLqS7XTKNfFdGLPVrzkvJTcszFBh8LcBM/M/Saturns%20Return-M.jpg",
-  "Scotty Saints":
-    "https://photos.smugmug.com/Music/Band-Logos/i-mkxmpN5/0/LBZK4jtwcc6xdfV3F2D3CH23LgS6xzM8QWW9wDQMN/X2/Scotty%20Saints-X2.jpg",
-  "Seasons of Ash":
-    "https://photos.smugmug.com/Music/Band-Logos/i-h2WkXk8/0/K5Bv398XLKkL4fFPCXWLNdhFX3pgPtrkqg95Nk2Ln/X2/Seasons%20of%20Ash-X2.jpg",
-  Seattle:
-    "https://photos.smugmug.com/Music/Band-Logos/i-FFzf3Hd/0/LXN2MHB8TXpRSjMdKZm4tGz7BcSsWdHPGnwKW2Wmd/XL/Seattle-XL.jpg",
-  "Second Sight":
-    "https://photos.smugmug.com/Music/Band-Logos/i-kq9KvH2/0/Mw8Pv8SpNRmpcpwZqW296W4pC6p2HQjWv94CfXsDP/X2/Second%20Sight-X2.jpg",
-  Seether:
-    "https://photos.smugmug.com/Music/Band-Logos/i-wpSF6wt/0/L2d2gLDqpZHfQDmjWHs3CgkNZfG86gPwG7W3RrkR7/X2/Seether-X2.jpg",
-  Slampig:
-    "https://photos.smugmug.com/Music/Band-Logos/i-9S7T4Ng/0/NLNVWVWjtDLnjs7VzZ3MZdgjHcRdKzfZ8vf9ssvkF/S/Slampig-S.jpg",
-  "Smothered Sun":
-    "https://photos.smugmug.com/Music/Band-Logos/i-JMzWM5z/0/MPRRjkM7HZfX4zx6v3RwHb4QB4nTcKdDJ63r8Xz5s/X2/Smothered%20Sun-X2.jpg",
-  SoiL: 
-    "https://photos.smugmug.com/Music/Band-Logos/i-MNqB97L/0/NCvj7VVGk6xHtxqLVKhC4TV2pPRRCZxGSjCbkcG5m/X2/SoiL-X2.jpg",
-  "Something Stupid":
-    "https://photos.smugmug.com/Music/Band-Logos/i-jQFcK2V/0/LjRCFk2B869Zr69kRDzMSvFq6VHsZ99shVvns45LK/X2/Something%20Stupid-X2.png",
-  "Sonic Libido":
-    "https://photos.smugmug.com/Music/Band-Logos/i-dvQ94s3/0/Mcqb37x6GCZrxbW7MjMjPtRDQBQvpHRnP6F3VQnxm/L/Sonic%20Libido-L.jpg",
-  Spectrobot:
-    "https://photos.smugmug.com/Music/Band-Logos/i-gHTBPkh/0/KGJHpCszC3mk2FX7q9DgcWNrkGCv4vNfdLvg9Nmdr/S/Spectrobot-S.jpg",
-  "Stand Abandoned":
-    "https://photos.smugmug.com/Music/Band-Logos/i-cG2Tptq/0/MJXzPgbZkW3cmvtHs7MFZPV7N82x4SzJPm8tggc9v/X2/Stand%20Abandoned-X2.jpg",
-  "Stillborn Condition":
-    "https://photos.smugmug.com/Music/Band-Logos/i-Zw5hvB5/0/LxXGsTr5f8mncqN353hSwbcrRMjhC8WDQB7qqWC3Q/X2/Stillborn%20Condition-X2.jpg",
-  "Sygnal to Noise":
-    "https://photos.smugmug.com/Music/Band-Logos/i-ZhZBDdd/0/K2VfMXrtj5NR92L3DxJtmS4LGLZqMkNrcKVXCMZPV/L/STN-L.jpg",
-  "Stove Up":
-    "https://photos.smugmug.com/Music/Band-Logos/i-JJPmX5m/0/KHr4CVwQjj3SjVJxz5ZMLzsF53TDvCJpmXW2RTrkg/X2/Stove%20Up-X2.jpg",
-  Sythe:
-    "https://photos.smugmug.com/Music/Band-Logos/i-wpjm8q7/0/K8zsszSLfWS2PP8C7gQkBsf8FCX4XpNLZQZLVRW8d/X2/Sythe-X2.jpg",
-  Tactiles:
-    "https://photos.smugmug.com/Music/Band-Logos/i-FD95ChH/0/NBbLFPnHMfKZT3j5JTF877KpLqh6xw4tdZsgMNQ4M/X2/Tactiles-X2.jpg",
-  "The Unscarred":
-    "https://photos.smugmug.com/Music/Band-Logos/i-J6VtZpp/0/KmPM94SBKW5C6qPRMSxgTFPT4q7CRvzRfnND2Z7Pd/X2/The%20Unscarred-X2.jpg",
-  "Thousand Mile Fall":
-    "https://photos.smugmug.com/Music/Band-Logos/i-b3xCgss/0/MFPZHvTFRXNsQ72f9XFfrt8wRxxpVxKFGbFv7FKFb/X2/Thousand%20Mile%20Fall-X2.jpg",
-  "Threat Signal":
-    "https://photos.smugmug.com/Music/Band-Logos/i-fzcD6VN/0/MszMT27R8QrhgrDjpDq5JbZDfjxsDssXR4dQfPxFZ/S/Threat%20Signal-S.jpg",
-  "Throttle":
-    "https://photos.smugmug.com/Music/Band-Logos/i-jN5mTwZ/0/NMkTMRvB53PdpCdzKc2Jgx7N8kmFX2gzw7MKZdjNp/L/Throttle-L.jpg",
-  "Thy Enemy":
-    "https://photos.smugmug.com/Music/Band-Logos/i-rbSbTKW/0/MX3GtKqTZFgJfc4HQv3bhWHvHr7nWnjcH736RD7gb/XL/Thy%20Enemy-XL.jpg",
-  "Time Out Timmy":
-    "https://photos.smugmug.com/Music/Band-Logos/i-PWgst89/0/K9Lbkwv5kJXg8x7CvQChV8ccdcHVbv6Nwv8dqhDqt/X2/Time%20Out%20Timmy-X2.jpg",
-  "Too Late The Hero":
-    "https://photos.smugmug.com/Music/Band-Logos/i-pbjWfs5/0/NJXtFDxxRsH2VD7BmfQnwNX59nHhFwDxLTZwKzj24/M/Too%20Late%20The%20Hero-M.jpg",
-  "Trash Fire":
-    "https://photos.smugmug.com/Music/Band-Logos/i-4GVb82c/0/KMrTTmqDZk6H9S8fqjFhdc8WV6xhbdTTVFCrzGXq2/X2/Trash%20Fire-X2.jpg",
-  "Trawl":
-    "https://photos.smugmug.com/Music/Band-Logos/i-WrMGrgQ/0/LPpdpw3dcn6P9NzkfPc7QJDRmzS6qHDfhMksVxmqR/X2/Trawl-X2.jpg",
-  "Tree":
-    "https://photos.smugmug.com/Music/Band-Logos/i-Wdg5785/0/NbbjNhhjRvvWMDpp4Qr5f8B6kHzHMKC97G57Cp5D6/Th/Tree-Th.jpg",
-  "Trans-Siberian Orchestra":
-    "https://photos.smugmug.com/Music/Band-Logos/i-Kd5q4sx/0/L3wLFVBCPnSxj7QGvnL8BXg83ZSVV2MrjxHMRMPRk/X2/TSO-X2.jpg",
-  "Twin Grizzly":
-    "https://photos.smugmug.com/Music/Band-Logos/i-HDFK8n8/0/NV5PMbTWJZWSpZMpSjvWV7jL99g2XMmcP77w2TbbP/XL/Twin%20Grizzly-XL.jpg",
-  "Two Forty Gordy":
-    "https://photos.smugmug.com/Music/Band-Logos/i-z4Spmwr/0/LnhxKDGLVt2TDsdLgckgmT7P3BGfdsZcCZsrrHFLT/L/Two%20Forty%20Gordy-L.jpg",
-  "Uncertainty":
-    "https://photos.smugmug.com/Music/Band-Logos/i-4tVWRqC/0/Ktr6PfV9k3RwMktDVbC62cbtVjJSMZX9ms6jQBw2V/L/Uncertainty-L.jpg",
-  "Uncle Jack":
-    "https://photos.smugmug.com/Music/Band-Logos/i-ZnwhQb7/0/KTJ4zp2gFbPTn9VZ5fG8vSkChrVGhRJm6VNXJkRQ4/X2/Uncle%20Jack-X2.jpg",
-  "Viqueen":
-    "https://photos.smugmug.com/Music/Band-Logos/i-LXLNVZD/0/L4gTkGnkBt3wBn3VQpT8sTKJvSNvwVHnM43xG3wz6/X2/Viqueen-X2.jpg",
-  "Voices of the Dead":
-    "https://photos.smugmug.com/Music/Band-Logos/i-PsqNTmZ/0/LrmjW5phRh6tPqPJdJTncLZ7xZjNQfBxtntWVVbNn/L/Voices%20of%20the%20Dead-L.jpg",
-  "Volbeat":
-    "https://photos.smugmug.com/Music/Band-Logos/i-7JJtjXW/0/L8xbF5LmnVkqf77PgDJdQx55Z5hmRcGnZScV8h9xf/L/Volbeat-L.jpg",
-  "VRSA":
-    "https://photos.smugmug.com/Music/Band-Logos/i-QZm6s2C/0/K2mmLCk2jng6XpWsMsmjkNd6KFznMwfQT6zQLCgjW/X2/VRSA-X2.jpg",
-  "War Criminal":
-    "https://photos.smugmug.com/Music/Band-Logos/i-ZxmXCLz/0/NhjxHFbGHVMCDzXCSqdXGVJCjhZGtNHxGcqWpvrS2/M/War%20Criminal-M.jpg",
-  "Wecreatedthismonster":
-    "https://photos.smugmug.com/Music/Band-Logos/i-tzv5599/0/NQRTHzzPRnqdgx4bTFx3wqbdcd5VHcpT4JMM5ZPwB/M/Wecreatedthismonster-M.jpg",
-  "Widow Sunday":
-    "https://photos.smugmug.com/Music/Band-Logos/i-J9SXFH6/0/KTBKrj5DFdnDn3GsSbRKmVrj6z359tPjBjVgMS9jH/X2/Widow%20Sunday-X2.jpg",
-  "When Muppetz Attack":
-    "https://photos.smugmug.com/Music/Band-Logos/i-L6NzjNd/0/Kr4THVVVMNHGfxxzGq94tJmT8NzP7hVPhzg3rNcK2/M/WMA-M.jpg",
-  "When The Dead Won't Die":
-    "https://photos.smugmug.com/Music/Band-Logos/i-bZkkGv9/0/LVc3RNnmq6PTHMtjxc9k567Rtw5v5Lfk9gVMVW8hz/X2/WTDWD-X2.jpg",
-}
+// ================== CONFIG ==================
+const CSV_ENDPOINT = "http://localhost:3000/sheet/bands"
+const SHOWS_ENDPOINT = "http://localhost:3000/sheet/shows"
 
 const REGION_IMAGES = {
   Local:
     "https://photos.smugmug.com/photos/i-SCzbkmj/1/KjHvTQVKnSz36KmxFS5c2MrtLhgm9Wc8mTghFb5R8/M/i-SCzbkmj-M.png",
   Regional:
-    "https://photos.smugmug.com/photos/i-x5ncQx7/0/KcWqCsJ2cD94cz6fn2hwGxJjdMrbV6kSCXQ3ssGGw/S/i-x5ncQx7-S.jpg",
+    "https://photos.smugmug.com/photos/i-x5ncQx7/0/MFxNbXRFkpx24fPVT5z8q76PMgKVWrcHx2X8d6xkN/X2/i-x5ncQx7-X2.jpg",
   National:
-    "https://photos.smugmug.com/photos/i-3Kk8S5k/0/MznDGX8kBgM99xp6RKNKf4L4VHtnKrx3ghQLF85h7/S/i-3Kk8S5k-S.jpg",
+    "https://photos.smugmug.com/photos/i-3Kk8S5k/0/LHqPfJS5N5VhVtLxzQXpHBswLR2KR56tqVmQSTGXt/X2/i-3Kk8S5k-X2.jpg",
   International:
-    "https://photos.smugmug.com/photos/i-jqJ9RJd/0/LhpXpWQjX2Gbbh9nn4DsjxvwMWZBDWSMpSFRfPxJq/S/i-jqJ9RJd-S.jpg",
+    "https://photos.smugmug.com/photos/i-jqJ9RJd/0/MN8NRZ8WvtkwFrRspBRHbCr7h7nLJfXZDpVbj25wq/X2/i-jqJ9RJd-X2.jpg",
 }
 
-// region → letter → bands
-const BANDS = {
-  Local: {
-    "O-C": [
-      { name: "13 High" },
-      { name: "3FD" },
-      { name: "6-Gig" },
-      { name: "Absence of the Sun" },
-      { name: "Acoustified" },
-      { name: "Afterblack" },
-      { name: "Alions" },
-      { name: "Alter the Tides" },
-      { name: "Amanita" },
-      { name: "Among Shadows" },
-      { name: "Anatomy of a Thief" },
-      { name: "Angel Slayer" },
-      { name: "Arta'Sin" },
-      { name: "Ascent to Power" },
-      { name: "Ashe Madness" },
-      { name: "Ashen Grey" },
-      { name: "Audio Apocalypse" },
-      { name: "Badtude" },
-      { name: "The Band Apollo" },
-      { name: "Battery Steele" },
-      { name: "Beautiful Pain" },
-      { name: "Before the Betrayal" },
-      { name: "Beyond the Fall" },
-      { name: "Big Meat Hammer" },
-      { name: "Black Box" },
-      { name: "Black Orange" },
-      { name: "Black Vinegar" },
-      { name: "Blind Alibi" },
-      { name: "Bloodborn" },
-      { name: "Brand New Day" },
-      { name: "Break The Skin" },
-      { name: "BreakThrough" },
-      { name: "Broken Empire" },
-      { name: "The Burial Curse" },
-      { name: "Burning Time" },
-      { name: "Cabal" },
-      { name: "Calibrating the Calamity" },
-      { name: "Capture the Sun" },
-      { name: "Cavemanifesto" },
-      { name: "Cheers to Verona" },
-      { name: "Civil Disturbance" },
-      { name: "Clapping in Irons" },
-      { name: "Conscious Cadaver" },
-      { name: "Corn Borer" },
-      { name: "Cover One Eye" },
-      { name: "Cradle II Grave" },
-      { name: "Creatures" },
-      { name: "Cryptid Slaughter" },
-      { name: "Culling the Herd" },
-    ],
-    "D-G": [
-      { name: "Dark Rain" },
-      { name: "Dark River Rising" },
-      { name: "Dave Osborne Band" },
-      { name: "Dead In Your Eyes" },
-      { name: "Dead Season" },
-      { name: "Deadly Desire" },
-      { name: "Death's Hand" },
-      { name: "Destination: Void" },
-      { name: "Devil's Nite Out" },
-      { name: "Diablooo" },
-      { name: "Dirty Rotten Winter" },
-      { name: "Division North" },
-      { name: "Drown in Filth" },
-      { name: "Drunk in Public" },
-      { name: "Echo Ritual" },
-      { name: "El Grande" },
-      { name: "Eldemur Krimm" },
-      { name: "EndGame" },
-      { name: "enigmatheory" },
-      { name: "Enlightened StrangeLink" },
-      { name: "Estabrook Inc" },
-      { name: "Ethereal Rot" },
-      { name: "Everything In-Between (EIB)" },
-      { name: "Exclave" },
-      { name: "The Fall of Babylon" },
-      { name: "False Prophecy" },
-      { name: "Fates Last Fight" },
-      { name: "Fifth Freedom" },
-      { name: "Forbidden Covenant" },
-      { name: "Forward Momentum Prophecy (FMP)" },
-      { name: "Four Feet Out" },
-      { name: "Friday Night Lites" },
-      { name: "The Great North" },
-    ],
-    "H-K": [
-      { name: "The Hailing Tides" },
-      { name: "Hatred Alive" },
-      { name: "Heart Shaped Rock" },
-      { name: "Hogan's Alley" },
-      { name: "The Hollow Glow" },
-      { name: "Holy Filth" },
-      { name: "I, The Conqueror" },
-      { name: "Identity Crisis" },
-      { name: "In The Key of Suffering" },
-      { name: "In the Kingdom of Nightmares" },
-      { name: "In The Wind" },
-      { name: "Inhuman Nature" },
-      { name: "Interloc" },
-      { name: "Iron Dynamite" },
-      { name: "J-Dubb & CPE" },
-      { name: "Juboybe" },
-      { name: "Kamikaze Angel" },
-      { name: "Ken/James Grimmsley (Acoustic)" },
-      { name: "Killing Voorhees" },
-      { name: "Kolossos" },
-      { name: "Kryptosporidium" },
-    ],
-    "L-O": [
-      { name: "Last Ones Alive" },
-      { name: "Lawton" },
-      { name: "Leach Field" },
-      { name: "Left on the Outside (LOTO)" },
-      { name: "Lemonade" },
-      { name: "Lethal Creed" },
-      { name: "Loki" },
-      { name: "Manuel" },
-      { name: "The Marble Socket" },
-      { name: "Marshall Marquis Band" },
-      { name: "Mechanical Banshees" },
-      { name: "Metal Night" },
-      { name: "Midnight Possession" },
-      { name: "Mill Fire" },
-      { name: "MindShiver" },
-      { name: "Misantrophy" },
-      { name: "Misgyded" },
-      { name: "Morganite" },
-      { name: "The Motor Creeps" },
-      { name: "MOUND" },
-      { name: "Murcielago" },
-      { name: "My Tempered Soul" },
-      { name: "NOBIS" },
-      { name: "Notyetlost" },
-      { name: "NOVA" },
-      { name: "Objet" },
-      { name: "Omniterra" },
-    ],
-    "P-S": [
-      { name: "Paradise is Cancelled" },
-      { name: "Pariah" },
-      { name: "Peter Mack (Acoustic)" },
-      { name: "Ponder" },
-      { name: "Project 246" },
-      { name: "Project 1313" },
-      { name: "Pulsifier" },
-      { name: "Pushing the Clock" },
-      { name: "Rapper Ashley" },
-      { name: "RC.Budaka" },
-      { name: "Rebirth to Ends" },
-      { name: "Render" },
-      { name: "The Resistance" },
-      { name: "Re:Vision" },
-      { name: "Ripfence" },
-      { name: "A River of Trees" },
-      { name: "Roseview" },
-      { name: "Ruckus" },
-      { name: "RUIN" },
-      { name: "Ryze Above" },
-      { name: "Salvo" },
-      { name: "Saturn's Return" },
-      { name: "S.C.O.B.Y." },
-      { name: "Scotty Saints and the True Believers" },
-      { name: "Seasons of Ash" },
-      { name: "Seattle" },
-      { name: "Second Sight" },
-      { name: "The Secret of Esrever" },
-      { name: "Seize the Vatican" },
-      { name: "Shy Green" },
-      { name: "Sidecar Radio" },
-      { name: "Sinfist" },
-      { name: "Skrye" },
-      { name: "Slampig" },
-      { name: "Smothered Sun" },
-      { name: "Society, Inc" },
-      { name: "Something Stupid" },
-      { name: "Sonic Libido" },
-      { name: "Sound and Vice" },
-      { name: "Spawn of Man" },
-      { name: "Spectrobot" },
-      { name: "Spidermilk" },
-      { name: "Stillborn Condition" },
-      { name: "Stoned Audio" },
-      { name: "Stove Up" },
-      { name: "Strict9" },
-      { name: "Strictly Business" },
-      { name: "The Struggle Within" },
-      { name: "Sygnal to Noise" },
-      { name: "Sythe" },
-    ],
-    "T-Z": [
-      { name: "Tattered Hearts Club" },
-      { name: "Terrible Old Man" },
-      { name: "Thousand Mile Fall" },
-      { name: "Throttle" },
-      { name: "Thy Enemy" },
-      { name: "Too Late the Hero" },
-      { name: "Towers" },
-      { name: "Toxic Cross" },
-      { name: "A Traitor's Pact" },
-      { name: "Trash Fire" },
-      { name: "Trawl" },
-      { name: "Tried and True" },
-      { name: "Twin Grizzly" },
-      { name: "Two Forty Gordy" },
-      { name: "Typhoid Mary" },
-      { name: "Uncertainty" },
-      { name: "Uncle Jack" },
-      { name: "The Unscarred" },
-      { name: "The Vanityites" },
-      { name: "VennDetta" },
-      { name: "Viqueen" },
-      { name: "The Waking Life" },
-      { name: "War Criminal" },
-      { name: "Weaoons at Hand" },
-      { name: "Wecreatedthismonster" },
-      { name: "When Muppetz Attack" },
-      { name: "When The Dead Won't Die" },
-      { name: "Worthy Bones" },
-      { name: "Y Wouldn't U" },
-      { name: "Years Go By" },
-      { name: "Zealous Bellus" },
-    ],
-  },
-  Regional: {
-    "O-G": [
-      { name: "4x4 Barracuda" },
-      { name: "Aegri Somnia" },
-      { name: "The Beast of Nod" },
-      { name: "Begat the Nephilim" },
-      { name: "Bottlefight" },
-      { name: "Carnivora" },
-      { name: "Carolina Burn" },
-      { name: "Cougar Bait" },
-      { name: "Cryptius" },
-      { name: "Cytokine" },
-      { name: "Dawn of End" },
-      { name: "Dead By Wednesday" },
-      { name: "Death Rattle" },
-      { name: "Death Ray Vision" },
-      { name: "Deathcode" },
-      { name: "Diamond Edge" },
-      { name: "Diecast" },
-      { name: "Empty Halls" },
-      { name: "Exhale" },
-    ],
-    "H-M": [
-      { name: "Hope Before the Fall" },
-      { name: "I-Invent" },
-      { name: "Ire & Woe" },
-      { name: "Iron Gate" },
-      { name: "Leaving Eden" },
-      { name: "Lone Wolf James" },
-      { name: "Mammothor" },
-      { name: "Manifest" },
-      { name: "Mindset-X" },
-      { name: "Muckler's Circle" },
-      { name: "My Missing Half" },
-    ],
-    "N-S": [
-      { name: "No Room To Breathe" },
-      { name: "Novus Dae" },
-      { name: "Pistol Shot Gypsy" },
-      { name: "Prospect Hill" },
-      { name: "Puddles of Joy" },
-      { name: "Reaver" },
-      { name: "Renegade Cartel" },
-      { name: "SEXcoffee" },
-      { name: "SIXTEENx20" },
-      { name: "Sonic Pulse" },
-      { name: "Stand Abandoned" },
-    ],
-    "T-Z": [
-      { name: "Tactiles" },
-      { name: "Time Out Timmy" },
-      { name: "TREE" },
-      { name: "Voices of the Dead" },
-      { name: "VRSA" },
-      { name: "Widow Sunday" },
-      { name: "Wreckless Child" },
-    ],
-  },
-  National: {
-    "O-G": [
-      { name: "10 Years" },
-      { name: "Adema" },
-      { name: "Aerosmith" },
-      { name: "All That Remains" },
-      { name: "Almost Accounted For" },
-      { name: "Alter Bridge" },
-      { name: "Avenged Sevenfolkd" },
-      { name: "AWOLNATION" },
-      { name: "Bam Margera-Fuckface Unstoppable" },
-      { name: "Bastardane" },
-      { name: "Beartooth" },
-      { name: "Black Stone Cherry" },
-      { name: "Bonded by Blood" },
-      { name: "Brett Young" },
-      { name: "Buckcherry" },
-      { name: "Burden of the Sky" },
-      { name: "Butcher Babies" },
-      { name: "Chevelle" },
-      { name: "Cliver" },
-      { name: "Clutch" },
-      { name: "Core" },
-      { name: "Corrosion of Conformity" },
-      { name: "Dark Sky Choir" },
-      { name: "Devil You Know" },
-      { name: "Devour the Day" },
-      { name: "Dillinger Escape Plan" },
-      { name: "Disturbed" },
-      { name: "Eric Church" },
-      { name: "Eva Under Fire" },
-      { name: "Evanescence" },
-      { name: "Extreme" },
-      { name: "Eye Empire" },
-      { name: "Fever 333" },
-      { name: "Filmore" },
-      { name: "First Jason/Ari Lehman" },
-      { name: "Fozzy" },
-      { name: "Godsmack" },
-      { name: "GFM" },
-    ],
-    "H-M": [
-      { name: "Hatebreed" },
-      { name: "Hed-PE" },
-      { name: "Hell or Highwater" },
-      { name: "Hellyeah" },
-      { name: "I, Prevail" },
-      { name: "Ill Nino" },
-      { name: "Imagine Dragons" },
-      { name: "In This Moment" },
-      { name: "Incite" },
-      { name: "Janus" },
-      { name: "Josey Scott Band" },
-      { name: "Joyous Wolf" },
-      { name: "Killswitch Engage" },
-      { name: "KrashKarma" },
-      { name: "Kyng" },
-      { name: "Lamb of God" },
-      { name: "Lody Kong" },
-      { name: "Losing September" },
-      { name: "Maddie & Tae" },
-      { name: "Mastodon" },
-      { name: "Memphis May Fire" },
-      { name: "Middle Class Rut" },
-      { name: "Modern Day Outlaw" },
-      { name: "Mushroomhead" },
-    ],
-    "N-S": [
-      { name: "The Nocturnal Affair" },
-      { name: "Nonpoint" },
-      { name: "Octobrists" },
-      { name: "Papa Roach" },
-      { name: "Powerman 5000" },
-      { name: "Rob Zombie" },
-      { name: "Sevendust" },
-      { name: "Shadowplay" },
-      { name: "Slash/Myles Kennedy" },
-      { name: "SoiL" },
-      { name: "Soulfly" },
-      { name: "Starset" },
-      { name: "Stone Sour" },
-      { name: "Sykosis" },
-    ],
-    "T-Z": [
-      { name: "Taproot" },
-      { name: "Texas Hippie Coalition" },
-      { name: "Thrashole" },
-      { name: "Threatpoint" },
-      { name: "Through Fire" },
-      { name: "Trans-Siberian Orchestra" },
-      { name: "Tremonti" },
-      { name: "Trivium" },
-      { name: "Ultra Major" },
-      { name: "Unlocking the Truth" },
-      { name: "Unsaid Fate" },
-      { name: "VentanA" },
-      { name: "Wayland" },
-      { name: "We Came As Romans" },
-      { name: "Wikkid Witch" },
-    ],
-  },
-  International: {
-    All: [
-      { name: "The Agonist" },
-      { name: "Amon Amarth" },
-      { name: "Avatar" },
-      { name: "Blackguard" },
-      { name: "Crown Lands" },
-      { name: "Deep Purple" },
-      { name: "In Flames" },
-      { name: "Kittie" },
-      { name: "Lacuna Coil" },
-      { name: "Seether" },
-      { name: "Threat Signal" },
-      { name: "Volbeat" },
-    ],
-  },
+// where each region actually lives on SmugMug
+const REGION_FOLDER_BASE = {
+  Local: "Music/Archives/Bands/Local", // this already works from CSV
+  Regional: "Music/Archives/Bands/Regional",
+  National: "Music/Archives/Bands/National",
+  International: "Music/Archives/Bands/International",
 }
 
+// manual overrides if you ever want them
+const POSTERS_MANUAL = {}
 
-// ------- /CONFIG -------
+// global data
+let BANDS = {}
+let SHOWS = []
 
+// remember last letter view for “back to bands”
+let LAST_VIEW = null
+
+// DOM refs
 const treeEl = document.getElementById("tree")
 const resultsEl = document.getElementById("results")
 const crumbsEl = document.getElementById("crumbs")
 const statusEl = document.getElementById("status")
-const filterInput = document.getElementById("filterInput")
 
+// ----- top tabs (Bands / Shows) -----
+function initTopTabs() {
+  const tabsBar = document.createElement("div")
+  tabsBar.className = "top-tabs"
+
+  const tabs = [
+    { id: "bands", label: "Bands" },
+    { id: "shows", label: "Shows" },
+  ]
+
+  let currentTab = "bands"
+
+  tabs.forEach((t, idx) => {
+    const btn = document.createElement("button")
+    btn.textContent = t.label
+    btn.className = "top-tab" + (idx === 0 ? " active" : "")
+    btn.addEventListener("click", () => {
+      currentTab = t.id
+      tabsBar
+        .querySelectorAll(".top-tab")
+        .forEach((b) => b.classList.remove("active"))
+      btn.classList.add("active")
+
+      if (currentTab === "bands") {
+        // reset styles that Shows view set
+        resultsEl.style.display = ""
+        resultsEl.style.width = ""
+        buildTree()
+        crumbsEl.textContent = "Select a band from the list."
+        resultsEl.innerHTML = ""
+      } else {
+        // swap to the years list
+        buildShowsYears()
+        crumbsEl.textContent = "Select a year from the list."
+        resultsEl.innerHTML = ""
+      }
+    })
+
+    tabsBar.appendChild(btn)
+  })
+
+  // place it right AFTER <header> and BEFORE <div class="wrap">
+  const headerEl = document.querySelector("header")
+  const wrapEl = document.querySelector(".wrap")
+
+  if (headerEl && wrapEl && wrapEl.parentNode === headerEl.parentNode) {
+    headerEl.parentNode.insertBefore(tabsBar, wrapEl)
+  } else {
+    // fallback
+    document.body.insertBefore(tabsBar, document.querySelector(".wrap"))
+  }
+}
+
+// make left band tree stay put
+if (treeEl) {
+  treeEl.style.position = "sticky"
+  treeEl.style.top = "0" // <-- adjust if you have a header, e.g. "70px"
+  treeEl.style.alignSelf = "flex-start"
+  treeEl.style.maxHeight = "100vh" // <-- keeps it from growing past viewport
+  treeEl.style.overflowY = "auto"
+}
+
+// helper
 const toSlug = (s) =>
   (s || "")
     .trim()
@@ -771,74 +107,572 @@ const toSlug = (s) =>
     .replace(/[^a-z0-9\s-]+/gi, "")
     .replace(/\s+/g, "-")
     .toLowerCase()
-	
 
+// =============== CSV helpers =================
+function parseCsvLine(line) {
+  const out = []
+  let cur = ""
+  let inQuotes = false
 
-function resolveLogoUrl(bandName) {
-  const slug = toSlug(bandName)
-  return LOGOS_MANUAL[bandName] || LOGOS_MANUAL[slug] || ""
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i]
+
+    if (ch === '"') {
+      if (inQuotes && line[i + 1] === '"') {
+        cur += '"'
+        i++
+      } else {
+        inQuotes = !inQuotes
+      }
+    } else if (ch === "," && !inQuotes) {
+      out.push(cur.trim())
+      cur = ""
+    } else {
+      cur += ch
+    }
+  }
+  out.push(cur.trim())
+  return out
 }
 
-function showBandCard(region, letter, bandObj) {
-  const bandDisplay = bandObj.name
-  const bandFolder = bandObj.folder || toSlug(bandDisplay)
-  const bandUrl = `https://${SMUG.NICKNAME}.smugmug.com/${SMUG.BASE_FOLDER}/${region}/${bandFolder}`
+// get all shows that match a given year using the CSV date field
+function getShowsForYear(year) {
+  const yr = Number(year)
+  if (!SHOWS || !SHOWS.length) return []
 
-  // clear header + right area
-  crumbsEl.textContent = ""
-  resultsEl.innerHTML = ""
-
-  // main wrapper
-  const wrapper = document.createElement("div")
-  wrapper.className = "band-detail"
-
-  // band name
-  const title = document.createElement("h2")
-  title.textContent = bandDisplay
-  wrapper.appendChild(title)
-
-  // simple panel
-  const panel = document.createElement("div")
-  panel.className = "band-panel"
-
-  const p = document.createElement("p")
-  p.textContent = "Open this band’s SmugMug page:"
-  panel.appendChild(p)
-
-  const linkBtn = document.createElement("a")
-  linkBtn.href = bandUrl
-  linkBtn.target = "_blank"
-  linkBtn.rel = "noopener"
-  linkBtn.textContent = "Open on SmugMug ↗"
-  linkBtn.className = "band-open-btn"
-  panel.appendChild(linkBtn)
-
-  wrapper.appendChild(panel)
-  resultsEl.appendChild(wrapper)
+  return SHOWS.filter((show) => {
+    const raw = (show.date || show.show_date || "").trim()
+    if (!raw) return false
+    // expect format like "10/24/25" or "10/24/2025"
+    const parts = raw.split("/")
+    if (parts.length !== 3) return false
+    let y = parts[2].trim()
+    // turn "25" into 2025
+    if (y.length === 2) {
+      y = Number("20" + y)
+    } else {
+      y = Number(y)
+    }
+    return y === yr
+  })
 }
 
+// =============== load bands from CSV =================
+function loadBandsFromCsv() {
+  return fetch(CSV_ENDPOINT)
+    .then((r) => r.text())
+    .then((text) => {
+      if (!text.trim()) return {}
 
+      const lines = text.split(/\r?\n/).filter((l) => l.trim())
+      const headerLine = lines.shift()
+      const header = headerLine.split(",").map((h) => h.trim().toLowerCase())
 
+      const bandIdx = header.indexOf("band")
+      const regionIdx = header.indexOf("region")
+      const letterIdx = header.indexOf("letter")
+      const smugFolderIdx = header.indexOf("smug_folder")
+      const logoIdx = header.indexOf("logo_url")
 
-// show ALL bands in a letter group
-function showLetterBands(region, letter, bandsArr) {
-  crumbsEl.textContent = `${region} › ${letter}`
+      const locationIdx = header.indexOf("location")
+      const stateIdx = header.indexOf("state")
+      const countryIdx = header.indexOf("country")
+      const statusIdx = header.indexOf("status")
+      const vox1Idx = header.indexOf("vox_1")
+      const vox2Idx = header.indexOf("vox_2")
+      const vox3Idx = header.indexOf("vox_3")
+      const guitar1Idx = header.indexOf("guitar_1")
+      const guitar2Idx = header.indexOf("guitar_2")
+      const guitar3Idx = header.indexOf("guitar_3")
+      const bassIdx = header.indexOf("bass")
+      const drumIdx = header.indexOf("drum")
+      const past1Idx = header.indexOf("past_1")
+      const past2Idx = header.indexOf("past_2")
+      const past3Idx = header.indexOf("past_3")
+      const past4Idx = header.indexOf("past_4")
+      const past5Idx = header.indexOf("past_5")
+      const past6Idx = header.indexOf("past_6")
+      const totalSetsIdx = header.indexOf("total_sets")
+      const setsArchiveIdx = header.indexOf("sets_archive")
+
+      if (bandIdx === -1) {
+        console.error("CSV must have a 'band' column.")
+        return {}
+      }
+
+      function bucketFor(name) {
+        if (!name) return "0-C"
+        const c = name.trim().charAt(0).toUpperCase()
+        if ("ABC0123456789".includes(c)) return "0-C"
+        if ("DEFG".includes(c)) return "D-G"
+        if ("HIJK".includes(c)) return "H-K"
+        if ("LMNO".includes(c)) return "L-O"
+        if ("PQRS".includes(c)) return "P-S"
+        return "T-Z"
+      }
+
+      const built = {}
+
+      lines.forEach((line) => {
+        const cols = parseCsvLine(line)
+        const name = (cols[bandIdx] || "").trim()
+        if (!name) return
+
+        // normalize/trim region
+        const regionRaw =
+          regionIdx !== -1 && cols[regionIdx] ? cols[regionIdx] : "Local"
+        const region = regionRaw.trim() || "Local"
+
+        // normalize/trim letter
+        const letterRaw =
+          letterIdx !== -1 && cols[letterIdx] ? cols[letterIdx] : ""
+        const letter = letterRaw.trim() || bucketFor(name)
+
+        // normalize/trim smug folder
+        const smugFolder =
+          smugFolderIdx !== -1 && cols[smugFolderIdx]
+            ? cols[smugFolderIdx].trim()
+            : ""
+
+        const logoUrl =
+          logoIdx !== -1 && cols[logoIdx] ? cols[logoIdx].trim() : ""
+
+        const bandData = {
+          name,
+          smug_folder: smugFolder,
+          logo_url: logoUrl,
+          location: locationIdx !== -1 ? (cols[locationIdx] || "").trim() : "",
+          state: stateIdx !== -1 ? (cols[stateIdx] || "").trim() : "",
+          country: countryIdx !== -1 ? (cols[countryIdx] || "").trim() : "",
+          status: statusIdx !== -1 ? (cols[statusIdx] || "").trim() : "",
+          vox_1: vox1Idx !== -1 ? (cols[vox1Idx] || "").trim() : "",
+          vox_2: vox2Idx !== -1 ? (cols[vox2Idx] || "").trim() : "",
+          vox_3: vox3Idx !== -1 ? (cols[vox3Idx] || "").trim() : "",
+          guitar_1: guitar1Idx !== -1 ? (cols[guitar1Idx] || "").trim() : "",
+          guitar_2: guitar2Idx !== -1 ? (cols[guitar2Idx] || "").trim() : "",
+          guitar_3: guitar3Idx !== -1 ? (cols[guitar3Idx] || "").trim() : "",
+          bass: bassIdx !== -1 ? (cols[bassIdx] || "").trim() : "",
+          drum: drumIdx !== -1 ? (cols[drumIdx] || "").trim() : "",
+          past_1: past1Idx !== -1 ? (cols[past1Idx] || "").trim() : "",
+          past_2: past2Idx !== -1 ? (cols[past2Idx] || "").trim() : "",
+          past_3: past3Idx !== -1 ? (cols[past3Idx] || "").trim() : "",
+          past_4: past4Idx !== -1 ? (cols[past4Idx] || "").trim() : "",
+          past_5: past5Idx !== -1 ? (cols[past5Idx] || "").trim() : "",
+          past_6: past6Idx !== -1 ? (cols[past6Idx] || "").trim() : "",
+          // make sure these become numbers later
+          total_sets:
+            totalSetsIdx !== -1 ? (cols[totalSetsIdx] || "").trim() : "",
+          sets_archive:
+            setsArchiveIdx !== -1 ? (cols[setsArchiveIdx] || "").trim() : "",
+        }
+
+        if (!built[region]) built[region] = {}
+        if (!built[region][letter]) built[region][letter] = []
+        built[region][letter].push(bandData)
+      })
+
+      return built
+    })
+    .catch((err) => {
+      console.error("Error loading bands CSV:", err)
+      return {}
+    })
+}
+
+// ---- SmugMug folder helpers ----
+
+// find all band albums whose album name looks like this show's date
+async function findAlbumsForShow(show) {
+  const matches = []
+  const rawDate = (show.date || show.show_date || "").trim()
+  if (!rawDate) return matches
+
+  // we’ll match both "10/24/25" and, if present, the 4-digit version "10/24/2025"
+  let shortDate = rawDate
+  let longDate = ""
+  const parts = rawDate.split("/")
+  if (parts.length === 3 && parts[2].length === 2) {
+    longDate = `${parts[0]}/${parts[1]}/20${parts[2]}`
+  }
+
+  // walk every band we have, just like showBandCard() does
+  for (const [region, letters] of Object.entries(BANDS)) {
+    for (const [letter, bandArr] of Object.entries(letters)) {
+      for (const bandObj of bandArr) {
+        const bandName = bandObj.name
+        const bandLogo = bandObj.logo_url || ""
+        const smugFolder = (bandObj.smug_folder || "").trim()
+        const nameSlug = toSlug(bandName)
+
+        const candidates = []
+
+        // CSV override – just the band folder name
+        if (smugFolder) {
+          candidates.push(smugFolder)
+        }
+
+        // guesses from band name (slug + raw), no region prefix
+        if (nameSlug) {
+          candidates.push(nameSlug)
+        }
+        if (bandName) {
+          candidates.push(bandName)
+        }
+
+        let albums = []
+
+        // try each candidate until we get albums
+        for (const cand of candidates) {
+          const cleanPath = cand.replace(/\/+/g, "/")
+          const slug = toSlug(cleanPath || bandName)
+          const url = `http://localhost:3000/smug/${encodeURIComponent(
+            slug,
+          )}?folder=${encodeURIComponent(cleanPath)}&count=100&start=1`
+
+          try {
+            const res = await fetch(url)
+            const data = await res.json()
+            const found =
+              (data &&
+                data.Response &&
+                (data.Response.Album || data.Response.Albums)) ||
+              []
+
+            if (found.length) {
+              albums = found
+              break
+            }
+          } catch (err) {
+            // ignore and try next
+          }
+        }
+
+        if (!albums.length) continue
+
+        // now filter albums by date in the name
+        albums.forEach((alb) => {
+          const name = (alb && alb.Name ? alb.Name : "").trim()
+          if (!name) return
+
+          const hasShort = shortDate && name.includes(shortDate)
+          const hasLong = longDate && name.includes(longDate)
+
+          if (hasShort || hasLong) {
+            matches.push({
+              bandName,
+              bandLogo,
+              albumName: name,
+            })
+          }
+        })
+      }
+    }
+  }
+
+  return matches
+}
+
+// test helper: build { date: Set(bands) } using current data + album finder
+async function buildShowDateBandIndex() {
+  const index = {} // { "10/24/25": Set(["Trawl", "Re:Vision", ...]) }
+
+  for (const show of SHOWS || []) {
+    const date = (show.date || show.show_date || "").trim()
+    if (!date) continue
+
+    // use the same (slow-ish) finder we already wrote
+    const matches = await findAlbumsForShow(show)
+
+    // de-dupe by band name
+    const bands = new Set()
+    matches.forEach((m) => {
+      if (m.bandName) bands.add(m.bandName)
+    })
+
+    if (!index[date]) {
+      index[date] = new Set()
+    }
+    bands.forEach((b) => index[date].add(b))
+  }
+
+  // turn Sets into arrays so it's easy to inspect
+  const printable = {}
+  Object.keys(index).forEach((d) => {
+    printable[d] = Array.from(index[d])
+  })
+
+  console.log("show-date → bands:", printable)
+  return printable
+}
+
+// get all albums inside a SmugMug folder using the same pattern
+// your code already uses in showBandCard(...)
+async function fetchFolderAlbums(folderPath) {
+  // make a slug the same way the band view does
+  const baseSlug = toSlug(folderPath || "")
+
+  const res = await fetch(
+    `http://localhost:3000/smug/${encodeURIComponent(
+      baseSlug,
+    )}?folder=${encodeURIComponent(folderPath)}&count=200&start=1`,
+  )
+  const data = await res.json()
+
+  // your /smug/... handler returns Response.Album
+  const albums =
+    (data && data.Response && (data.Response.Album || data.Response.Albums)) ||
+    []
+
+  return albums
+}
+
+// get ALL images from ONE album (paged) – same paging behavior as your album view
+async function fetchAllAlbumImages(albumKey) {
+  const all = []
+  let start = 1
+  let more = true
+
+  while (more) {
+    const res = await fetch(
+      `http://localhost:3000/smug/album/${encodeURIComponent(
+        albumKey,
+      )}?count=200&start=${start}`,
+    )
+    const data = await res.json()
+    const imgs =
+      (data &&
+        data.Response &&
+        (data.Response.AlbumImage || data.Response.Images)) ||
+      []
+    all.push(...imgs)
+    if (imgs.length === 200) {
+      start += 200
+    } else {
+      more = false
+    }
+  }
+
+  return all
+}
+
+// =============== load shows from CSV =================
+function loadShowsFromCsv() {
+  return fetch(SHOWS_ENDPOINT)
+    .then((r) => r.text())
+    .then((text) => {
+      if (!text.trim()) return []
+
+      const lines = text.split(/\r?\n/).filter((l) => l.trim())
+      const headerLine = lines.shift()
+
+      // use the same CSV parser we already defined above
+      const header = parseCsvLine(headerLine).map((h) => h.trim())
+      const headerLower = header.map((h) => h.toLowerCase())
+
+      // find the “main” fields by name (case-insensitive)
+      const nameIdx =
+        headerLower.indexOf("show_name") !== -1
+          ? headerLower.indexOf("show_name")
+          : headerLower.indexOf("title")
+      const urlIdx =
+        headerLower.indexOf("show_url") !== -1
+          ? headerLower.indexOf("show_url")
+          : headerLower.indexOf("poster_url")
+      const dateIdx =
+        headerLower.indexOf("show_date") !== -1
+          ? headerLower.indexOf("show_date")
+          : headerLower.indexOf("date")
+      const venueIdx = headerLower.indexOf("show_venue")
+      const cityIdx =
+        headerLower.indexOf("show_city") !== -1
+          ? headerLower.indexOf("show_city")
+          : headerLower.indexOf("city")
+      const stateIdx =
+        headerLower.indexOf("show_state") !== -1
+          ? headerLower.indexOf("show_state")
+          : headerLower.indexOf("state")
+
+      const rows = []
+
+      lines.forEach((line) => {
+        const cols = parseCsvLine(line)
+
+        // start with the “known” fields
+        const row = {
+          title: nameIdx !== -1 ? (cols[nameIdx] || "").trim() : "",
+          poster_url: urlIdx !== -1 ? (cols[urlIdx] || "").trim() : "",
+          date: dateIdx !== -1 ? (cols[dateIdx] || "").trim() : "",
+          venue: venueIdx !== -1 ? (cols[venueIdx] || "").trim() : "",
+          city: cityIdx !== -1 ? (cols[cityIdx] || "").trim() : "",
+          state: stateIdx !== -1 ? (cols[stateIdx] || "").trim() : "",
+        }
+
+        // now keep EVERY other column too (band_1 … band_20, etc.)
+        header.forEach((colName, i) => {
+          const key = colName.toLowerCase()
+          const val = (cols[i] || "").trim()
+          // don’t overwrite the ones we set above, but do keep all band_*
+          if (typeof row[key] === "undefined") {
+            row[key] = val
+          }
+        })
+
+        rows.push(row)
+      })
+
+      return rows
+    })
+    .catch((err) => {
+      console.error("Error loading shows CSV:", err)
+      return []
+    })
+}
+
+// =============== small show helpers ===============
+function findShowForAlbumName(albName) {
+  if (!albName) return null
+  if (!SHOWS.length) return null
+
+  const clean = albName.trim().toLowerCase()
+  for (const show of SHOWS) {
+    const title = (show.title || "").trim().toLowerCase()
+    const date = (show.date || "").trim().toLowerCase()
+    if ((date && clean.includes(date)) || (title && clean.includes(title))) {
+      return show
+    }
+  }
+  return null
+}
+
+function findPosterForAlbumName(albName) {
+  const show = findShowForAlbumName(albName)
+  if (!show) return null
+  return show.poster_url || show.show_url || show.image || null
+}
+
+function formatShowDate(raw) {
+  if (!raw) return ""
+  const parts = raw.split("/")
+  if (parts.length !== 3) return raw
+  let [m, d, y] = parts.map((p) => p.trim())
+
+  m = parseInt(m, 10)
+  d = parseInt(d, 10)
+  if (y.length === 2) {
+    y = Number("20" + y)
+  } else {
+    y = parseInt(y, 10)
+  }
+
+  const monthNames = [
+    "",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ]
+
+  function ordinal(n) {
+    const s = ["th", "st", "nd", "rd"]
+    const v = n % 100
+    return n + (s[(v - 20) % 10] || s[v] || s[0])
+  }
+
+  if (!monthNames[m] || !d || !y) return raw
+  return `${monthNames[m]} ${ordinal(d)}, ${y}`
+}
+
+// =============== letter view ===============
+function showLetter(region, letter) {
+  // remember what we opened so "back to bands" works
+  LAST_VIEW = { type: "letter", region, letter }
+
+  const bandsArr = (BANDS[region] && BANDS[region][letter]) || []
+
+  // HEADER + LEGEND (one time)
+  crumbsEl.innerHTML = ""
+
+  const crumbText = document.createElement("span")
+  crumbText.textContent = `${region} › ${letter}`
+  crumbsEl.appendChild(crumbText)
+
+  const legend = document.createElement("div")
+  legend.style.display = "inline-flex"
+  legend.style.gap = "12px"
+  legend.style.alignItems = "center"
+  legend.style.marginLeft = "200px" // keep your left margin
+  crumbsEl.appendChild(legend)
+
+  function makeLegendItem(color, label) {
+    const wrap = document.createElement("div")
+    wrap.style.display = "flex"
+    wrap.style.alignItems = "center"
+    wrap.style.gap = "6px"
+
+    const box = document.createElement("div")
+    box.style.width = "22px"
+    box.style.height = "14px"
+    box.style.border = `4px solid ${color}`
+    box.style.borderRadius = "6px"
+    box.style.background = "transparent"
+
+    const txt = document.createElement("span")
+    txt.textContent = `= ${label}`
+    txt.style.fontSize = "12px"
+    txt.style.color = "#fff"
+
+    wrap.appendChild(box)
+    wrap.appendChild(txt)
+    return wrap
+  }
+
+  // exactly 3 items — no extras
+  legend.appendChild(
+    makeLegendItem("#4a0000", "Nothing yet, keep checking back"),
+  )
+  legend.appendChild(makeLegendItem("#d1a91b", "In Progress"))
+  legend.appendChild(makeLegendItem("#0a7f3a", "Fully updated/completed"))
+
+  // now clear the results area for the cards
   resultsEl.innerHTML = ""
 
   if (!bandsArr.length) {
-    resultsEl.innerHTML = '<div class="empty">No bands in this group yet.</div>'
+    resultsEl.appendChild(document.createTextNode("No bands in this group."))
     return
   }
-  
-  
 
   bandsArr.forEach((bandObj) => {
     const bandDisplay = bandObj.name
-    const logoUrl = resolveLogoUrl(bandDisplay)
+    const logoUrl = bandObj.logo_url
 
+    // NEW: read the two numbers safely
+    const total = Number(bandObj.total_sets) || 0
+    const archived = Number(bandObj.sets_archive) || 0
+
+    // make the card
     const card = document.createElement("article")
     card.className = "card"
 
+    // decide color class
+    let statusClass = "card-empty"
+    if (total === 0 && archived === 0) {
+      statusClass = "card-empty"
+    } else if (archived > 0 && archived < total) {
+      statusClass = "card-partial"
+    } else if (total > 0 && archived === total) {
+      statusClass = "card-complete"
+    }
+    card.classList.add(statusClass)
+
+    // thumbnail area
     const thumb = document.createElement("div")
     thumb.className = "thumb"
 
@@ -846,6 +680,9 @@ function showLetterBands(region, letter, bandsArr) {
       const img = document.createElement("img")
       img.src = logoUrl
       img.alt = bandDisplay + " logo"
+      img.style.width = "100%"
+      img.style.height = "100%"
+      img.style.objectFit = "contain"
       thumb.appendChild(img)
     } else {
       const none = document.createElement("div")
@@ -854,30 +691,1031 @@ function showLetterBands(region, letter, bandsArr) {
       thumb.appendChild(none)
     }
 
-    // this used to be an <a> to SmugMug.
-    // now it just calls our detail view
+    // band name button
     const titleBtn = document.createElement("button")
     titleBtn.className = "small-link"
     titleBtn.textContent = bandDisplay
-    titleBtn.style.fontSize = "18px"
     titleBtn.style.background = "transparent"
     titleBtn.style.border = "none"
     titleBtn.style.color = "inherit"
+    titleBtn.style.fontSize = "18px"
     titleBtn.style.textAlign = "left"
     titleBtn.style.cursor = "pointer"
+    titleBtn.addEventListener("click", () =>
+      showBandCard(region, letter, bandObj),
+    )
 
-    titleBtn.addEventListener("click", (e) => {
-      e.preventDefault()
-      // show the single-band view in the SAME area
-      showBandCard(region, letter, bandObj)
-    })
-
+    // put it together
     card.append(thumb, titleBtn)
     resultsEl.appendChild(card)
   })
 }
 
+// =============== single album → photos (with delegation so toggle still lightboxes) ===============
+async function loadAndShowAlbumPhotos(
+  albumKey,
+  container,
+  albumTitle = "",
+  nodeKey = "",
+) {
+  if (!albumKey) return
 
+  const globalBack = document.getElementById("back-to-albums-btn")
+  if (globalBack) {
+    globalBack.style.display = "none"
+  }
+
+  // clear right side
+  container.innerHTML = ""
+
+  function makeHeaderPill({ text, minWidth = "400px" }) {
+    const el = document.createElement("div")
+    el.textContent = text
+    el.style.background = "rgba(15,23,42,0.25)"
+    el.style.border = "1px solid rgba(148,163,184,0.15)"
+    el.style.borderRadius = "9999px"
+    el.style.padding = "10px 22px"
+    el.style.color = "#e2e8f0"
+    el.style.fontWeight = "800"
+    el.style.fontSize = "18px"
+    el.style.display = "inline-flex"
+    el.style.alignItems = "center"
+    el.style.justifyContent = "center"
+    el.style.minHeight = "50px"
+    el.style.minWidth = minWidth
+    return el
+  }
+
+  function makeActionPill({
+    text,
+    as = "button",
+    href = "",
+    onClick = null,
+    minWidth = "160px",
+  }) {
+    const el =
+      as === "a"
+        ? document.createElement("a")
+        : document.createElement("button")
+    el.textContent = text
+    el.style.background =
+      "radial-gradient(circle at top, rgba(125,197,255,0.22), rgba(2,6,23,0))"
+    el.style.border = "1px solid rgba(125,197,255,0.25)"
+    el.style.borderRadius = "9999px"
+    el.style.padding = "12px 26px"
+    el.style.display = "flex"
+    el.style.alignItems = "center"
+    el.style.justifyContent = "center"
+    el.style.boxShadow = "0 8px 25px rgba(0,0,0,0.28)"
+    el.style.backdropFilter = "blur(8px)"
+    el.style.minHeight = "54px"
+    el.style.minWidth = minWidth
+    el.style.color = "#eff6ff"
+    el.style.fontWeight = "600"
+    el.style.fontSize = "14px"
+    el.style.textDecoration = "none"
+    el.style.cursor = "pointer"
+
+    if (as === "a" && href) {
+      el.href = href
+      el.target = "_blank"
+      el.rel = "noopener"
+    }
+    if (typeof onClick === "function") {
+      el.addEventListener("click", onClick)
+    }
+    return el
+  }
+
+  const topBar = document.createElement("div")
+  topBar.style.display = "flex"
+  topBar.style.flexDirection = "column"
+  topBar.style.gap = "8px"
+  topBar.style.marginBottom = "8px"
+  container.appendChild(topBar)
+
+  const row1 = document.createElement("div")
+  row1.style.display = "flex"
+  const headerPill = makeHeaderPill({
+    text: albumTitle ? albumTitle : "Album photos",
+    minWidth: "240px",
+  })
+  row1.appendChild(headerPill)
+  topBar.appendChild(row1)
+
+  const row2 = document.createElement("div")
+  row2.style.display = "flex"
+  row2.style.gap = "14px"
+  topBar.appendChild(row2)
+
+  const backPill = makeActionPill({
+    text: "← Back to albums",
+    minWidth: "200px",
+    onClick: () => {
+      const realBack = document.getElementById("back-to-albums-btn")
+      if (realBack) {
+        realBack.style.display = "none"
+        realBack.click()
+      }
+    },
+  })
+  row2.appendChild(backPill)
+
+  let currentSort = "capture"
+
+  // we'll call renderAll() from here
+  let renderAllRef = null
+
+  const sortPill = makeActionPill({
+    text: "Sort by Keyword",
+    minWidth: "190px",
+    onClick: () => {
+      currentSort = currentSort === "capture" ? "keyword" : "capture"
+      sortPill.textContent =
+        currentSort === "capture" ? "Sort by Keyword" : "Sort by Capture Time"
+      if (typeof renderAllRef === "function") {
+        renderAllRef()
+      }
+    },
+  })
+  row2.appendChild(sortPill)
+
+  if (nodeKey) {
+    const buyPill = makeActionPill({
+      text: "Buy Photos",
+      as: "a",
+      href: `https://vmpix.smugmug.com/shop?nodeKey=${encodeURIComponent(nodeKey)}`,
+      minWidth: "160px",
+    })
+    row2.appendChild(buyPill)
+  }
+
+  const loading = document.createElement("div")
+  loading.textContent = "Loading photos…"
+  loading.style.fontSize = "13px"
+  loading.style.color = "rgba(226,232,240,0.6)"
+  container.appendChild(loading)
+
+  let allImgs = []
+  let photosWrap = null
+  let currentViewList = []
+
+  function keywordsFromImg(img) {
+    if (Array.isArray(img.KeywordArray) && img.KeywordArray.length) {
+      return img.KeywordArray.map((k) => k.trim())
+        .filter(Boolean)
+        .map((k) => k.toLowerCase())
+    }
+    if (typeof img.Keywords === "string" && img.Keywords.trim() !== "") {
+      return img.Keywords.split(/[;,]/)
+        .map((k) => k.trim())
+        .filter(Boolean)
+        .map((k) => k.toLowerCase())
+    }
+    return ["(no keyword)"]
+  }
+
+  // ===== LIGHTBOX =====
+  let lightboxEl = null
+  let lightboxImg = null
+  let lightboxCaption = null
+  let lightboxIndex = 0
+
+  function ensureLightbox() {
+    if (lightboxEl) return
+    lightboxEl = document.createElement("div")
+    lightboxEl.style.position = "fixed"
+    lightboxEl.style.inset = "0"
+    lightboxEl.style.background = "rgba(0,0,0,0.85)"
+    lightboxEl.style.display = "flex"
+    lightboxEl.style.flexDirection = "column"
+    lightboxEl.style.alignItems = "center"
+    lightboxEl.style.justifyContent = "center"
+    lightboxEl.style.zIndex = "99999"
+    lightboxEl.style.gap = "12px"
+
+    lightboxImg = document.createElement("img")
+    lightboxImg.style.maxWidth = "96vw"
+    lightboxImg.style.maxHeight = "96vh"
+    lightboxImg.style.objectFit = "contain"
+    lightboxImg.style.borderRadius = "12px"
+    lightboxImg.style.boxShadow = "0 18px 45px rgba(0,0,0,0.35)"
+    lightboxEl.appendChild(lightboxImg)
+
+    lightboxCaption = document.createElement("div")
+    lightboxCaption.style.color = "#fff"
+    lightboxCaption.style.fontSize = "12px"
+    lightboxCaption.style.opacity = "0.75"
+    lightboxEl.appendChild(lightboxCaption)
+
+    const controls = document.createElement("div")
+    controls.style.display = "flex"
+    controls.style.gap = "10px"
+    controls.style.marginTop = "8px"
+
+    function btn(txt) {
+      const b = document.createElement("button")
+      b.textContent = txt
+      b.style.background = "rgba(15,23,42,0.35)"
+      b.style.border = "1px solid rgba(255,255,255,0.18)"
+      b.style.borderRadius = "9999px"
+      b.style.padding = "8px 16px"
+      b.style.color = "#fff"
+      b.style.cursor = "pointer"
+      return b
+    }
+
+    const prevBtn = btn("← Prev")
+    const nextBtn = btn("Next →")
+    const closeBtn = btn("Close ✕")
+
+    prevBtn.onclick = () => showAt(lightboxIndex - 1)
+    nextBtn.onclick = () => showAt(lightboxIndex + 1)
+    closeBtn.onclick = () => {
+      if (lightboxEl && lightboxEl.parentNode) {
+        lightboxEl.parentNode.removeChild(lightboxEl)
+      }
+      // reset so next click can recreate it
+      lightboxEl = null
+      lightboxImg = null
+      lightboxCaption = null
+    }
+
+    controls.appendChild(prevBtn)
+    controls.appendChild(nextBtn)
+    controls.appendChild(closeBtn)
+    lightboxEl.appendChild(controls)
+
+    lightboxEl.addEventListener("click", (e) => {
+      if (e.target === lightboxEl) {
+        lightboxEl.parentNode.removeChild(lightboxEl)
+        // reset here too
+        lightboxEl = null
+        lightboxImg = null
+        lightboxCaption = null
+      }
+    })
+
+    document.body.appendChild(lightboxEl)
+  }
+
+  // upsize SmugMug-sized URLs
+  function upgradeSmugToOriginal(url) {
+    if (!url) return ""
+    let out = url.replace(/\/(S|M|L|XL|X2|X3|Th|T)\//gi, "/O/")
+    out = out.replace(/-(S|M|L|XL|X2|X3|Th|T)\./gi, "-O.")
+    return out
+  }
+
+  function bestFullUrl(img) {
+    const candidates = [
+      img.OriginalUrl,
+      img.OriginalImageUrl,
+      img.OriginalSizeUrl,
+      img.ArchivedSizeUrl,
+      img.ImageUrl,
+      img.X3LargeUrl,
+      img.X2LargeUrl,
+      img.LargeUrl,
+      img.Url,
+      img.MediumUrl,
+      img.SmallUrl,
+      img.ThumbnailUrl,
+    ].filter(Boolean)
+
+    if (candidates.length === 0) {
+      console.log("No usable image fields on image object:", img)
+      return ""
+    }
+
+    const first = candidates[0]
+    if (
+      candidates.length === 1 &&
+      /photos\.smugmug\.com\/.+\/(S|M|L|XL|X2|X3|Th|T)\//i.test(first)
+    ) {
+      const bumped = upgradeSmugToOriginal(first)
+      console.log("Only thumbnail/sized URL present, bumped to:", bumped, img)
+      return bumped
+    }
+
+    return first
+  }
+
+  function showAt(idx) {
+    if (!currentViewList.length) return
+    if (idx < 0) idx = currentViewList.length - 1
+    if (idx >= currentViewList.length) idx = 0
+    lightboxIndex = idx
+    const img = currentViewList[idx]
+    if (!img) return
+    lightboxImg.src = bestFullUrl(img)
+    lightboxCaption.textContent =
+      img.FileName || `${idx + 1} / ${currentViewList.length}`
+  }
+
+  function openLightbox(idx) {
+    ensureLightbox()
+    showAt(idx)
+  }
+
+  // ---- event delegation so rebuilt grids still open lightbox ----
+  let delegated = false
+  function ensureDelegation() {
+    if (delegated) return
+    container.addEventListener("click", (e) => {
+      const box = e.target.closest(".smug-photo-box")
+      if (!box) return
+      const idx = Number(box.dataset.index || "-1")
+      if (!Number.isFinite(idx) || idx < 0) return
+      e.preventDefault()
+      e.stopPropagation()
+      openLightbox(idx)
+    })
+    delegated = true
+  }
+
+  function buildPhotoBox(img, viewIndex) {
+    const thumbUrl =
+      img.ThumbnailUrl ||
+      img.SquareUrl ||
+      img.SmallUrl ||
+      img.MediumUrl ||
+      img.Url ||
+      ""
+
+    const box = document.createElement("div")
+    box.className = "smug-photo-box" // <--- class for delegation
+    box.dataset.index = String(viewIndex)
+    box.style.background = "#0f172a"
+    box.style.border = "1px solid rgba(148,163,184,0.15)"
+    box.style.borderRadius = "10px"
+    box.style.overflow = "hidden"
+    box.style.cursor = "pointer"
+    box.style.width = "150px"
+    box.style.height = "110px"
+    box.style.display = "flex"
+    box.style.alignItems = "center"
+    box.style.justifyContent = "center"
+
+    const imgEl = document.createElement("img")
+    imgEl.src = thumbUrl
+    imgEl.alt = img.FileName || "photo"
+    imgEl.style.width = "100%"
+    imgEl.style.height = "100%"
+    imgEl.style.objectFit = "cover"
+    box.appendChild(imgEl)
+
+    return box
+  }
+
+  function renderAll() {
+    if (photosWrap && photosWrap.parentNode) {
+      photosWrap.parentNode.removeChild(photosWrap)
+    }
+    photosWrap = document.createElement("div")
+    photosWrap.style.display = "flex"
+    photosWrap.style.flexDirection = "column"
+    photosWrap.style.gap = "20px"
+    photosWrap.style.marginTop = "8px"
+    container.appendChild(photosWrap)
+
+    currentViewList = []
+
+    if (currentSort === "capture") {
+      const imgs = allImgs.slice().sort((a, b) => {
+        const da = new Date(a.Date || a.LastUpdated || a.LastUpdatedTime || 0)
+        const db = new Date(b.Date || b.LastUpdated || b.LastUpdatedTime || 0)
+        return db - da
+      })
+
+      const gridEl = document.createElement("div")
+      gridEl.style.display = "grid"
+      gridEl.style.gridTemplateColumns = "repeat(10, 150px)"
+      gridEl.style.gap = "12px"
+      photosWrap.appendChild(gridEl)
+
+      imgs.forEach((img) => {
+        const viewIndex = currentViewList.length
+        currentViewList.push(img)
+        gridEl.appendChild(buildPhotoBox(img, viewIndex))
+      })
+    } else {
+      const groups = {}
+      allImgs.forEach((img) => {
+        const kws = keywordsFromImg(img)
+        kws.forEach((kw) => {
+          if (!groups[kw]) groups[kw] = []
+          groups[kw].push(img)
+        })
+      })
+
+      const sortedKeys = Object.keys(groups).sort((a, b) => {
+        const aa = a === "(no keyword)" ? "zzzzzz" : a
+        const bb = b === "(no keyword)" ? "zzzzzz" : b
+        return aa.localeCompare(bb)
+      })
+
+      sortedKeys.forEach((kw) => {
+        const h = document.createElement("div")
+        h.textContent = kw === "(no keyword)" ? "Unlabeled" : kw
+        h.style.fontSize = "15px"
+        h.style.fontWeight = "700"
+        h.style.color = "#e2e8f0"
+        h.style.marginLeft = "4px"
+        photosWrap.appendChild(h)
+
+        const grid = document.createElement("div")
+        grid.style.display = "grid"
+        grid.style.gridTemplateColumns = "repeat(10, 150px)"
+        grid.style.gap = "12px"
+        photosWrap.appendChild(grid)
+
+        groups[kw].forEach((img) => {
+          const viewIndex = currentViewList.length
+          currentViewList.push(img)
+          grid.appendChild(buildPhotoBox(img, viewIndex))
+        })
+      })
+    }
+
+    // make sure clicks work even on this new DOM
+    ensureDelegation()
+  }
+
+  // keep a reference so the sort button can call it
+  renderAllRef = renderAll
+
+  try {
+    allImgs = await fetchAllAlbumImages(albumKey)
+    loading.remove()
+
+    if (!allImgs.length) {
+      const msg = document.createElement("div")
+      msg.textContent = "No photos in this album."
+      msg.style.color = "rgba(226,232,240,0.6)"
+      container.appendChild(msg)
+      return
+    }
+
+    renderAll()
+  } catch (err) {
+    console.error("error loading this album", err)
+    loading.textContent = "Error loading this album."
+  }
+}
+
+// =============== band detail ===============
+function showBandCard(region, letter, bandObj) {
+  const bandDisplay = bandObj.name
+  const smugFolder = bandObj.smug_folder
+  const bandLogo = bandObj.logo_url || ""
+
+  const clean = (v) =>
+    (v || "")
+      .toString()
+      .trim()
+      .replace(/^"+|"+$/g, "")
+      .replace(/^'+|'+$/g, "")
+
+  const isRealMember = (v) => {
+    const c = clean(v).toLowerCase()
+    if (!c) return false
+    if (c === "me" || c === "me*") return false
+    return true
+  }
+
+  crumbsEl.textContent = ""
+  resultsEl.innerHTML = ""
+
+  const wrapper = document.createElement("div")
+  wrapper.className = "band-detail"
+
+  // back button
+  const backBtn = document.createElement("button")
+  backBtn.textContent = "← Back to bands"
+  backBtn.style.marginBottom = "14px"
+  backBtn.style.padding = "5px 14px"
+  backBtn.style.background = "rgba(17,24,39,0.35)"
+  backBtn.style.color = "#fff"
+  backBtn.style.border = "1px solid rgba(148,163,184,0.25)"
+  backBtn.style.borderRadius = "9999px"
+  backBtn.style.cursor = "pointer"
+  backBtn.style.fontSize = "0.75rem"
+  backBtn.style.backdropFilter = "blur(6px)"
+  backBtn.addEventListener("click", () => {
+    if (LAST_VIEW && LAST_VIEW.type === "letter") {
+      showLetter(LAST_VIEW.region, LAST_VIEW.letter)
+    } else {
+      resultsEl.innerHTML = ""
+      crumbsEl.textContent = "Select a band from the list."
+    }
+  })
+  wrapper.appendChild(backBtn)
+
+  // header
+  const headerWrap = document.createElement("div")
+  headerWrap.style.display = "flex"
+  headerWrap.style.flexDirection = "column"
+  headerWrap.style.alignItems = "flex-start"
+  headerWrap.style.gap = "10px"
+  headerWrap.style.marginBottom = "16px"
+  wrapper.appendChild(headerWrap)
+
+  if (bandLogo) {
+    const logoImg = document.createElement("img")
+    logoImg.src = bandLogo
+    logoImg.alt = bandDisplay
+    logoImg.style.width = "400px"
+    logoImg.style.objectFit = "contain"
+    logoImg.style.filter = "drop-shadow(0 10px 24px rgba(0,0,0,0.35))"
+    logoImg.style.marginBottom = "4px"
+    headerWrap.appendChild(logoImg)
+  }
+
+  const pill = document.createElement("div")
+  pill.style.background =
+    "radial-gradient(circle at top, rgba(125,197,255,0.22), rgba(2,6,23,0))"
+  pill.style.border = "1px solid rgba(125,197,255,0.25)"
+  pill.style.borderRadius = "9999px"
+  pill.style.padding = "12px 26px"
+  pill.style.display = "flex"
+  pill.style.alignItems = "center"
+  pill.style.justifyContent = "center"
+  pill.style.boxShadow = "0 8px 25px rgba(0,0,0,0.28)"
+  pill.style.backdropFilter = "blur(8px)"
+  pill.style.minHeight = "54px"
+  pill.style.minWidth = "420px"
+
+  const title = document.createElement("div")
+  title.textContent = bandDisplay
+  title.style.fontSize = "1.55rem"
+  title.style.letterSpacing = "-0.02em"
+  title.style.color = "#eff6ff"
+  title.style.fontWeight = "600"
+  pill.appendChild(title)
+
+  headerWrap.appendChild(pill)
+
+  // separator
+  const sep = document.createElement("div")
+  sep.style.height = "3px"
+  sep.style.background =
+    "linear-gradient(to right, rgba(200,163,184,0.05), rgba(200,0,0,0.45), rgba(200,163,184,0.02))"
+  sep.style.margin = "10px 0 18px"
+  sep.style.width = "1000px"
+  wrapper.appendChild(sep)
+
+  // ===== simple info row (location / status / sets) =====
+  const topInfoRow = document.createElement("div")
+  topInfoRow.style.display = "flex"
+  topInfoRow.style.flexWrap = "nowrap"
+  topInfoRow.style.gap = "14px"
+  topInfoRow.style.marginBottom = "16px"
+  topInfoRow.style.width = "1000px" // <-- match separator width
+
+  // small helper to make a pill that looks like the top one
+  function pillBox(label, value) {
+    const box = document.createElement("div")
+
+    // COLORS / BORDER / RADIUS
+    box.style.background =
+      "radial-gradient(circle at top, rgba(125,197,255,0.08), rgba(2,6,23,0))"
+    box.style.border = "1px solid rgba(125,197,255,0.15)"
+    box.style.borderRadius = "9999px" // <-- make it pill shaped
+    box.style.backdropFilter = "blur(5px)"
+    box.style.background =
+      "radial-gradient(circle at top, rgba(125,197,255,0.22), rgba(2,6,23,0))"
+    box.style.boxShadow = "0 6px 18px rgba(0,0,0,0.22)"
+
+    // SPACING
+    box.style.padding = "12px 20px" // <-- increase/decrease pill padding
+    box.style.minWidth = "210px" // <-- width of each pill
+    box.style.display = "flex"
+    box.style.flexDirection = "column"
+    box.style.gap = "3px"
+
+    // LABEL
+    const lab = document.createElement("div")
+    lab.textContent = label
+    lab.style.fontSize = "10px"
+    lab.style.textTransform = "uppercase"
+    lab.style.color = "rgba(226,232,240,0.6)"
+    lab.style.letterSpacing = "0.08em"
+    box.appendChild(lab)
+
+    // VALUE
+    const main = document.createElement("div")
+    main.textContent = value
+    main.style.fontSize = "1rem" // <-- text size of value
+    main.style.fontWeight = "600"
+    main.style.color = "#eff6ff"
+    main.style.lineHeight = "1.2"
+    box.appendChild(main)
+
+    return box
+  }
+
+  // build location string
+  const locParts = []
+  if (bandObj.location) locParts.push(clean(bandObj.location))
+  if (bandObj.state) locParts.push(clean(bandObj.state))
+  const loc = locParts.join(", ")
+  const country = bandObj.country ? clean(bandObj.country) : ""
+  const locationText =
+    loc && country ? `${loc} - ${country}` : loc || country || "—"
+
+  topInfoRow.appendChild(pillBox("Home location/region", locationText))
+  topInfoRow.appendChild(
+    pillBox("Status", bandObj.status ? clean(bandObj.status) : "N/A"),
+  )
+  topInfoRow.appendChild(
+    pillBox(
+      "Sets (archive / total)",
+      `${bandObj.sets_archive || 0} / ${bandObj.total_sets || 0}`,
+    ),
+  )
+
+  wrapper.appendChild(topInfoRow)
+
+  // ===== members (2nd line) =====
+  // REPLACE your existing members block (from this line down to wrapper.appendChild(membersRow))
+  // inside showBandCard(...) with this version.
+  const membersRow = document.createElement("div")
+  membersRow.style.display = "flex"
+  membersRow.style.flexWrap = "nowrap"
+  membersRow.style.gap = "14px"
+  membersRow.style.marginBottom = "16px"
+  membersRow.style.width = "1000px" // <-- keep same overall width as line 1
+
+  // helper to make a member pill (so you can tweak line 2 separately from line 1)
+  function memberPill(label, membersArr) {
+    const box = document.createElement("div")
+
+    // MATCH LINE 1 GRADIENT / BORDER
+    box.style.background =
+      "radial-gradient(circle at top, rgba(125,197,255,0.08), rgba(2,6,23,0))"
+    box.style.border = "1px solid rgba(125,197,255,0.15)"
+    box.style.borderRadius = "20px"
+    box.style.backdropFilter = "blur(4px)"
+    box.style.boxShadow = "0 4px 12px rgba(0,0,0,0.14)"
+
+    // SPACING
+    box.style.padding = "12px 18px"
+    box.style.minWidth = "260px"
+    box.style.display = "flex"
+    box.style.flexDirection = "column"
+    box.style.gap = "4px"
+
+    // LABEL
+    const head = document.createElement("div")
+    head.textContent = label
+    head.style.fontSize = "10px"
+    head.style.textTransform = "uppercase"
+    head.style.color = "rgba(226,232,240,0.6)"
+    head.style.letterSpacing = "0.08em"
+    box.appendChild(head)
+
+    // BODY
+    if (!membersArr.length) {
+      const none = document.createElement("div")
+      none.textContent = "—"
+      none.style.fontSize = "15px"
+      none.style.color = "#e2e8f0"
+      box.appendChild(none)
+    } else {
+      membersArr.forEach((m) => {
+        const line = document.createElement("div")
+        line.textContent = m
+        line.style.fontSize = "16px"
+        line.style.color = "#e2e8f0"
+        line.style.fontWeight = "400"
+        line.style.lineHeight = "1.2"
+        box.appendChild(line)
+      })
+    }
+
+    return box
+  }
+
+  // build current/core members WITH short role tags in parentheses
+  const coreMembers = []
+  const roleMap = {} // name -> array of roles
+
+  function addCore(nameRaw, role) {
+    const name = clean(nameRaw)
+    if (!isRealMember(name)) return
+    if (!roleMap[name]) roleMap[name] = []
+    roleMap[name].push(role)
+  }
+
+  addCore(bandObj.vox_1, "vox")
+  addCore(bandObj.vox_2, "vox")
+  addCore(bandObj.vox_3, "vox")
+  addCore(bandObj.guitar_1, "gtr")
+  addCore(bandObj.guitar_2, "gtr")
+  addCore(bandObj.guitar_3, "gtr")
+  addCore(bandObj.bass, "bass")
+  addCore(bandObj.drum, "drums")
+
+  Object.keys(roleMap).forEach((name) => {
+    const roles = roleMap[name].join(", ")
+    coreMembers.push(`${name} (${roles})`)
+  })
+
+  // other / past members
+  const otherMembers = []
+  if (isRealMember(bandObj.past_1)) otherMembers.push(clean(bandObj.past_1))
+  if (isRealMember(bandObj.past_2)) otherMembers.push(clean(bandObj.past_2))
+  if (isRealMember(bandObj.past_3)) otherMembers.push(clean(bandObj.past_3))
+  if (isRealMember(bandObj.past_4)) otherMembers.push(clean(bandObj.past_4))
+  if (isRealMember(bandObj.past_5)) otherMembers.push(clean(bandObj.past_5))
+  if (isRealMember(bandObj.past_6)) otherMembers.push(clean(bandObj.past_6))
+
+  membersRow.appendChild(memberPill("Core members", coreMembers))
+  membersRow.appendChild(memberPill("Other members", otherMembers))
+
+  wrapper.appendChild(membersRow)
+
+  // lower separator (before albums/photos)
+  const lowerSep = document.createElement("div")
+  lowerSep.style.height = "3px"
+  lowerSep.style.background =
+    "linear-gradient(to right, rgba(200,163,184,0.05), rgba(200,0,0,0.45), rgba(200,163,184,0.02))"
+  lowerSep.style.margin = "6px 0 14px"
+  lowerSep.style.width = "1000px"
+  wrapper.appendChild(lowerSep)
+
+  // back to albums (shows album cards again)
+  const backToAlbumsBtn = document.createElement("button")
+  backToAlbumsBtn.id = "back-to-albums-btn"
+  backToAlbumsBtn.textContent = "← Back to albums"
+  backToAlbumsBtn.style.marginBottom = "10px"
+  backToAlbumsBtn.style.padding = "5px 14px"
+  backToAlbumsBtn.style.background = "rgba(17,24,39,0.35)"
+  backToAlbumsBtn.style.color = "#fff"
+  backToAlbumsBtn.style.border = "1px solid rgba(148,163,184,0.25)"
+  backToAlbumsBtn.style.borderRadius = "9999px"
+  backToAlbumsBtn.style.cursor = "pointer"
+  backToAlbumsBtn.style.fontSize = "0.75rem"
+  backToAlbumsBtn.style.backdropFilter = "blur(6px)"
+  backToAlbumsBtn.style.display = "none" // <-- hide in band (album list) view
+  backToAlbumsBtn.addEventListener("click", () => {
+    showBandCard(region, letter, bandObj)
+  })
+  wrapper.appendChild(backToAlbumsBtn)
+
+  // ===== albums heading =====
+  const info = document.createElement("p")
+  info.textContent = `Current Albums in Archive:`
+  info.style.marginBottom = "10px"
+  info.style.whiteSpace = "nowrap"
+  info.style.display = "inline-block"
+  wrapper.appendChild(info)
+
+  // create this FIRST so the button can use it
+  const albumsArea = document.createElement("div")
+  albumsArea.id = "albums-area"
+  wrapper.appendChild(albumsArea)
+
+  resultsEl.appendChild(wrapper)
+
+  // ===== fetch albums for this band (try several folder shapes) =====
+  ;(async () => {
+    const name = bandDisplay
+    const csvFolder = (smugFolder || "").trim()
+    const nameSlug = toSlug(name)
+
+    const candidates = []
+
+    // 1) Start from CSV smug_folder if present
+    //    Assume smug_folder is just the band folder name (e.g. "13-High", "Cytokine")
+    if (csvFolder) {
+      candidates.push(csvFolder)
+    }
+
+    // 2) Guesses based on the band name ONLY
+    //    (no region prefix; the server already knows the region)
+    if (nameSlug) {
+      candidates.push(nameSlug)
+    }
+    if (name) {
+      candidates.push(name)
+    }
+
+    // 3) De-dupe and clean
+    const cleanCandidates = []
+    const seen = new Set()
+    candidates.forEach((cand) => {
+      const val = (cand || "").trim()
+      if (!val) return
+      const key = val.toLowerCase()
+      if (!seen.has(key)) {
+        seen.add(key)
+        cleanCandidates.push(val.replace(/\/+/g, "/"))
+      }
+    })
+
+    let albums = []
+
+    for (const folderRel of cleanCandidates) {
+      // slug is just a safe ID for your /smug route
+      const slug = toSlug(folderRel || name)
+
+      // IMPORTANT: `folder` is now RELATIVE, e.g. "Local/13-high"
+      const url = `http://localhost:3000/smug/${encodeURIComponent(
+        slug,
+      )}?folder=${encodeURIComponent(folderRel)}&count=100&start=1`
+
+      console.log("trying", region, name, "→", folderRel)
+
+      try {
+        const res = await fetch(url)
+        const data = await res.json()
+        const found =
+          (data &&
+            data.Response &&
+            (data.Response.Album || data.Response.Albums)) ||
+          []
+
+        if (found.length) {
+          albums = found
+          break
+        }
+      } catch (err) {
+        console.warn("error trying", folderRel, err)
+      }
+    }
+
+    if (!albums.length) {
+      info.textContent = `No albums found for ${name}. Tried: ${cleanCandidates.join(
+        " | ",
+      )}`
+      return
+    }
+
+    // we found albums — render them
+    const ROW_SIZE = 4
+    albumsArea.innerHTML = ""
+
+    for (let i = 0; i < albums.length; i += ROW_SIZE) {
+      const rowAlbums = albums.slice(i, i + ROW_SIZE)
+      const row = document.createElement("div")
+      row.style.display = "grid"
+      row.style.gridTemplateColumns = `repeat(${rowAlbums.length}, 250px)`
+      row.style.gap = "14px"
+      row.style.marginBottom = "14px"
+      albumsArea.appendChild(row)
+
+      rowAlbums.forEach((alb) => {
+        const albumName =
+          (
+            (alb && (alb.Name || alb.Title || alb.NiceName || "")) ||
+            ""
+          ).trim() || "Untitled album"
+        const albumKey = (alb && (alb.AlbumKey || alb.Key)) || ""
+        const nodeKey = (alb && (alb.NodeID || alb.NodeId || alb.NodeKey)) || ""
+
+        // try to find a poster from the shows CSV first
+        const posterFromShow = findPosterForAlbumName(albumName)
+        const posterUrl =
+          POSTERS_MANUAL[albumName] ||
+          posterFromShow ||
+          alb.ThumbnailUrl ||
+          alb.SquareThumbURL ||
+          alb.ThumbUrl ||
+          ""
+
+        // outer card
+        const card = document.createElement("button")
+        card.type = "button"
+        card.style.background = "rgba(11,15,25,0.55)"
+        card.style.border = "1px solid rgba(148,163,184,0.28)"
+        card.style.borderRadius = "18px"
+        card.style.padding = "10px"
+        card.style.display = "flex"
+        card.style.flexDirection = "column"
+        card.style.gap = "8px"
+        card.style.cursor = albumKey ? "pointer" : "default"
+        card.style.textAlign = "left"
+        card.style.width = "250px"
+        card.style.boxShadow = "0 10px 25px rgba(0,0,0,0.35)"
+
+        // poster area
+        const posterBox = document.createElement("div")
+        posterBox.style.width = "100%"
+        posterBox.style.height = "200px"
+        posterBox.style.borderRadius = "12px"
+        posterBox.style.overflow = "hidden"
+        posterBox.style.background = "rgba(0,0,0,0.25)"
+        posterBox.style.display = "flex"
+        posterBox.style.alignItems = "center"
+        posterBox.style.justifyContent = "center"
+
+        if (posterUrl) {
+          const img = document.createElement("img")
+          img.src = posterUrl
+          img.alt = albumName
+          img.style.width = "100%"
+          img.style.height = "100%"
+          img.style.objectFit = "cover"
+          posterBox.appendChild(img)
+        } else {
+          const empty = document.createElement("div")
+          empty.textContent = "No poster"
+          empty.style.color = "rgba(248,250,252,0.6)"
+          empty.style.fontSize = "12px"
+          posterBox.appendChild(empty)
+        }
+
+        card.appendChild(posterBox)
+
+        // album title
+        const titleEl = document.createElement("div")
+
+        // remove leading MM/DD/YY - from the albumName
+        const titleNoDate = albumName.replace(
+          /^\s*\d{1,2}\/\d{1,2}\/\d{2,4}\s*-\s*/,
+          "",
+        )
+
+        titleEl.textContent = titleNoDate
+        titleEl.style.fontSize = "14px"
+        titleEl.style.fontWeight = "700"
+        titleEl.style.color = "#e5e7eb"
+        titleEl.style.whiteSpace = "normal"
+        titleEl.style.wordBreak = "break-word"
+        card.appendChild(titleEl)
+
+        // show metadata if we can match this album to a show
+        const show = findShowForAlbumName(albumName)
+        if (show) {
+          const meta = document.createElement("div")
+          const datePretty = formatShowDate(show.date || show.show_date || "")
+          const venueBits = [show.venue, show.city, show.state]
+            .map((v) => (v || "").trim())
+            .filter(Boolean)
+          meta.textContent = [datePretty, venueBits.join(" • ")]
+            .filter(Boolean)
+            .join(" — ")
+          meta.style.fontSize = "12px"
+          meta.style.color = "rgba(203,213,225,0.85)"
+          card.appendChild(meta)
+        }
+
+        // click → open photo grid
+        if (albumKey) {
+          card.addEventListener("click", () => {
+            const backToAlbumsBtn =
+              document.getElementById("back-to-albums-btn")
+            if (backToAlbumsBtn) {
+              backToAlbumsBtn.style.display = "inline-flex"
+            }
+
+            loadAndShowAlbumPhotos(albumKey, albumsArea, albumName, nodeKey)
+          })
+        } else {
+          // no key → visually "disabled"
+          card.style.opacity = "0.6"
+        }
+
+        row.appendChild(card)
+      })
+    }
+  })()
+}
+
+// build the left pane for "Shows" tab – just years
+function buildShowsYears() {
+  if (!treeEl) return
+  treeEl.innerHTML = ""
+
+  const years = []
+  for (let y = 2025; y >= 2011; y--) {
+    years.push(y)
+  }
+
+  years.forEach((year) => {
+    const details = document.createElement("details")
+    details.className = "letter"
+    const summary = document.createElement("summary")
+    summary.textContent = String(year)
+    details.appendChild(summary)
+
+    summary.addEventListener("click", () => {
+      const matches = getShowsForYear(year)
+      crumbsEl.textContent = `Shows › ${year}`
+      renderShowListForYear(year, matches)
+    })
+
+    treeEl.appendChild(details)
+  })
+
+  if (statusEl) {
+    statusEl.textContent = "Showing shows by year."
+  }
+}
+
+// =============== tree build ===============
 function buildTree() {
   treeEl.innerHTML = ""
 
@@ -885,67 +1723,30 @@ function buildTree() {
     const regionDet = document.createElement("details")
     regionDet.className = "region"
 
-    // summary with image for regions
     const regionSum = document.createElement("summary")
     const imgSrc = REGION_IMAGES[region]
     if (imgSrc) {
       const img = document.createElement("img")
       img.src = imgSrc
       img.alt = region
-      img.style.height = "200px" // adjust size as you like
+      img.style.height = "200px"
       img.style.objectFit = "contain"
-      img.style.display = "block"
       regionSum.appendChild(img)
     } else {
-      regionSum.textContent = region // fallback for any future regions
+      regionSum.textContent = region
     }
     regionDet.appendChild(regionSum)
 
-    // letters
-    Object.entries(letters).forEach(([letter, bands]) => {
+    Object.keys(letters).forEach((letter) => {
       const letterDet = document.createElement("details")
       letterDet.className = "letter"
 
       const letterSum = document.createElement("summary")
       letterSum.textContent = letter
-
-      // clicking a letter (e.g. O-C) shows ALL bands on the right
-      letterSum.addEventListener("click", () => {
-        setTimeout(() => showLetterBands(region, letter, bands), 0)
-      })
-
+      letterSum.addEventListener("click", () =>
+        setTimeout(() => showLetter(region, letter), 0),
+      )
       letterDet.appendChild(letterSum)
-
-      // keep your rule: only non–O-C letters list individual band buttons
-      if (
-        letter !== "O-C" &&
-        letter !== "O-G" &&
-        letter !== "D-G" &&
-        letter !== "H-K" &&
-        letter !== "H-M" &&
-        letter !== "L-O" &&
-        letter !== "N-S" &&
-        letter !== "P-S" &&
-        letter !== "T-Z" &&
-        letter !== "All"
-      ) {
-        const ul = document.createElement("ul")
-        if (!bands.length) {
-          const li = document.createElement("li")
-          li.textContent = `(Add bands for ${region} • ${letter})`
-          ul.appendChild(li)
-        } else {
-          bands.forEach((b) => {
-            const li = document.createElement("li")
-            const btn = document.createElement("button")
-            btn.textContent = b.name
-            btn.addEventListener("click", () => showBandCard(region, letter, b))
-            li.appendChild(btn)
-            ul.appendChild(li)
-          })
-        }
-        letterDet.appendChild(ul)
-      }
 
       regionDet.appendChild(letterDet)
     })
@@ -953,8 +1754,293 @@ function buildTree() {
     treeEl.appendChild(regionDet)
   })
 
-  statusEl.textContent = "Static mode (GitHub hosted). Edit in script.js."
+  if (statusEl) {
+    let count = 0
+    Object.values(BANDS).forEach((letters) => {
+      Object.values(letters).forEach((arr) => {
+        count += arr.length
+      })
+    })
+    statusEl.textContent = `Loaded ${count} bands from CSV.`
+  }
 }
 
-buildTree()
-bindFilter()
+// grab shows that look like they're from that year based on title text
+function filterShowsByYearLikeTitle(year) {
+  // we want things like "10/14/25" in the title
+  const needle = `/${String(year).slice(-2)}` // year 2025 -> "/25"
+  return (SHOWS || []).filter((show) => {
+    const title = (show.title || show.name || "").toLowerCase()
+    return title.includes(needle.toLowerCase())
+  })
+}
+
+// pull any band_1 ... band_20 / band1 / Band 1 style fields off the show row
+function getBandsFromShowRow(show) {
+  const bands = []
+  for (const key in show) {
+    // match: band1, band_1, band 1, Band_1, etc.
+    if (/^band[\s_]?(\d{1,2})$/i.test(key)) {
+      const val = (show[key] || "").trim()
+      if (val) bands.push(val)
+    }
+  }
+  return bands
+}
+
+// render them on the right, simple list for now
+function renderShowListForYear(year, shows) {
+  // make sure the right pane can stretch for the grid we’re about to add
+  // resultsEl.style.display = "block"
+  // resultsEl.style.width = "100%"
+
+  resultsEl.innerHTML = ""
+
+  if (!shows.length) {
+    const msg = document.createElement("div")
+    msg.textContent = `No shows found for ${year} (looked in the show date column).`
+    msg.style.color = "rgba(255,255,255,0.6)"
+    resultsEl.appendChild(msg)
+    return
+  }
+
+  const list = document.createElement("div")
+  list.style.display = "grid"
+  list.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))"
+  list.style.gap = "16px"
+  list.style.width = "100%"
+  resultsEl.appendChild(list)
+
+  shows.forEach((show) => {
+    const row = document.createElement("div")
+    row.style.display = "grid"
+    row.style.gridTemplateColumns = "160px auto"
+    row.style.gap = "14px"
+    row.style.background = "rgba(11,15,25,0.25)"
+    row.style.border = "1px solid rgba(255,255,255,0.03)"
+    row.style.borderRadius = "10px"
+    row.style.padding = "10px 12px"
+    row.style.alignItems = "flex-start"
+    row.style.position = "relative"
+    row.style.overflow = "hidden"
+    row.style.width = "100%"
+    row.style.boxSizing = "border-box"
+
+    // details panel
+    const details = document.createElement("div")
+    const inner = document.createElement("div")
+    inner.textContent =
+      "Extra show info goes here. (We can wire your idea in next.)"
+    inner.style.padding = "10px 0"
+    details.appendChild(inner)
+
+    // poster
+    const left = document.createElement("div")
+    left.style.width = "250px"
+    left.style.height = "160px"
+    left.style.borderRadius = "10px"
+    left.style.overflow = "hidden"
+    left.style.background = "rgba(0,0,0,0.15)"
+    left.style.display = "flex"
+    left.style.alignItems = "center"
+    left.style.justifyContent = "center"
+    left.style.cursor = "pointer"
+
+    const poster = show.poster_url || show.show_url || show.url || ""
+
+    if (poster) {
+      const img = document.createElement("img")
+      img.src = poster
+      img.alt = show.title || "show poster"
+      img.style.width = "100%"
+      img.style.height = "100%"
+      img.style.objectFit = "cover"
+
+      img.addEventListener("click", () => {
+        // toggle closed
+        if (details.classList.contains("open")) {
+          details.classList.remove("open")
+          details.style.maxHeight = "0px"
+          return
+        }
+
+        const bands = getBandsFromShowRow(show)
+
+        // normalize names so "Re:Vision" == "ReVision" == "re vision"
+        function normName(s) {
+          return (s || "").toLowerCase().replace(/[^a-z0-9]/g, "")
+        }
+
+        // find the actual band object + region + letter
+        function findBandInfo(bandName) {
+          const target = normName(bandName)
+          if (!target) return null
+          for (const [region, letters] of Object.entries(BANDS)) {
+            for (const [letter, bandArr] of Object.entries(letters)) {
+              const match = bandArr.find((b) => normName(b.name) === target)
+              if (match) {
+                return { band: match, region, letter }
+              }
+            }
+          }
+          return null
+        }
+
+        details.classList.add("open")
+
+        const wrap = document.createElement("div")
+        wrap.style.display = "flex"
+        wrap.style.flexWrap = "wrap"
+        wrap.style.gap = "14px"
+        wrap.style.padding = "10px 0"
+
+        if (!bands.length) {
+          const none = document.createElement("div")
+          none.textContent = "No data just yet - keep checking back"
+          none.style.color = "rgba(255,255,255,0.6)"
+          wrap.appendChild(none)
+        } else {
+          bands.forEach((name) => {
+            const info = findBandInfo(name)
+
+            const card = document.createElement("div")
+            card.style.background = "rgba(15,23,42,0.18)"
+            card.style.border = "1px solid rgba(148,163,184,0.12)"
+            card.style.borderRadius = "16px"
+            card.style.width = "200px"
+            card.style.padding = "10px"
+            card.style.display = "flex"
+            card.style.flexDirection = "column"
+            card.style.alignItems = "center"
+            card.style.gap = "6px"
+            card.style.cursor = info ? "pointer" : "default"
+
+            const logoBox = document.createElement("div")
+            logoBox.style.width = "100%"
+            logoBox.style.height = "120px"
+            logoBox.style.display = "flex"
+            logoBox.style.alignItems = "center"
+            logoBox.style.justifyContent = "center"
+            logoBox.style.overflow = "hidden"
+            logoBox.style.borderRadius = "12px"
+            logoBox.style.background = "rgba(0,0,0,0.15)"
+
+            const logoUrl = info && info.band.logo_url ? info.band.logo_url : ""
+
+            if (logoUrl) {
+              const img = document.createElement("img")
+              img.src = logoUrl
+              img.alt = name
+              img.style.maxWidth = "100%"
+              img.style.maxHeight = "100%"
+              img.style.objectFit = "contain"
+              logoBox.appendChild(img)
+            } else {
+              const txt = document.createElement("div")
+              txt.textContent = name.charAt(0).toUpperCase()
+              txt.style.fontSize = "28px"
+              txt.style.fontWeight = "700"
+              txt.style.color = "#e5e7eb"
+              logoBox.appendChild(txt)
+            }
+
+            card.appendChild(logoBox)
+
+            const label = document.createElement("div")
+            label.textContent = name
+            label.style.fontSize = "13px"
+            label.style.color = "#e5e7eb"
+            label.style.textAlign = "center"
+            label.style.marginTop = "2px"
+            card.appendChild(label)
+
+            if (info) {
+              card.addEventListener("click", () => {
+                showBandCard(info.region, info.letter, info.band)
+              })
+            }
+
+            wrap.appendChild(card)
+          })
+        }
+
+        // clear & re-attach
+        details.innerHTML = ""
+        details.appendChild(wrap)
+        details.style.maxHeight = "700px"
+      })
+
+      left.appendChild(img)
+    } else {
+      const fallback = document.createElement("div")
+      fallback.textContent = "No poster yet"
+      fallback.style.color = "rgba(255,255,255,0.6)"
+      fallback.style.fontSize = "12px"
+      fallback.style.textAlign = "center"
+      fallback.style.padding = "10px 6px"
+      left.appendChild(fallback)
+    }
+
+    row.appendChild(left)
+
+    // RIGHT COLUMN (title, date, venue, details)
+    const right = document.createElement("div")
+    right.style.display = "flex"
+    right.style.flexDirection = "column"
+    right.style.gap = "6px"
+    row.appendChild(right)
+
+    // title
+    const titleBox = document.createElement("div")
+    titleBox.textContent = show.title || "(Untitled show)"
+    titleBox.style.fontSize = "18px"
+    titleBox.style.fontWeight = "700"
+    titleBox.style.color = "#f9fafb"
+    titleBox.style.marginBottom = "4px"
+
+    // date
+    const dateBox = document.createElement("div")
+    dateBox.textContent = formatShowDate(show.date || show.show_date)
+    dateBox.style.fontSize = "13px"
+    dateBox.style.color = "rgba(226,232,240,0.9)"
+
+    // venue
+    const venueBox = document.createElement("div")
+    const city = (show.city || "").trim()
+    const state = (show.state || "").trim()
+    const venue = (show.venue || "").trim()
+
+    const locBits = [city, state].filter(Boolean).join(", ")
+    const venueLine = [locBits, venue].filter(Boolean).join(" — ")
+    venueBox.textContent = venueLine || "Location TBA"
+    venueBox.style.fontSize = "13px"
+    venueBox.style.color = "rgba(148,163,184,0.95)"
+
+    // attach text + details into right column
+    right.appendChild(titleBox)
+    right.appendChild(dateBox)
+    right.appendChild(venueBox)
+    right.appendChild(details)
+
+    // details spans both columns
+    details.style.gridColumn = "1 / -1"
+    details.style.maxHeight = "0"
+    details.style.overflow = "hidden"
+    details.style.transition = "max-height 0.3s ease"
+    details.style.padding = "0 4px 0 4px"
+
+    list.appendChild(row)
+  })
+}
+
+
+// =============== init ===============
+Promise.all([loadBandsFromCsv(), loadShowsFromCsv()]).then(
+  ([builtBands, shows]) => {
+    BANDS = builtBands
+    SHOWS = shows
+    initTopTabs() // <-- add this line
+    buildTree()
+    crumbsEl.textContent = "Select a band from the list."
+  },
+)
